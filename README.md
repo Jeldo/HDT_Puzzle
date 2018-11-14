@@ -8,9 +8,8 @@
 
 #Generator module:
 1. Makes 5x5 to 15x15 sized hidato puzzle based on its original rules.
-  >a. Rules aren't as strict as original rules.
-  
-  >b. Multiple solutions are <b>allowed.</b>
+  a. Rules aren't as strict as original rules.
+  b. Multiple solutions are <b>allowed.</b>
 2. Pass puzzle table and its row/column size to Solver
 
 #Solver module:
