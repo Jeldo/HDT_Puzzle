@@ -19,3 +19,8 @@ Solver module:
 
 Verifier:
 -TBD
+
+
+
+Reference
+https://en.wikipedia.org/wiki/Hidato
