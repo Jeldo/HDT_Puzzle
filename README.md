@@ -2,7 +2,7 @@
 
 This hidato puzzle program has three following modules:
 1. Generator
-2. Solver (working on)
+2. Solver (currently working on this)
 3. Verifier
 
 
