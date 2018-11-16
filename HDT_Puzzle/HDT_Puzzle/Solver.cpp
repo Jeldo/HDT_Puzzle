@@ -66,7 +66,7 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx)
 		return;
 	}
 	puzzle[x][y] = step;
-	cout << "step: " << step << " , visiting: " << "(" << x << "," << y << ") ::" << puzzle[x][y] << "------------------"<< endl;
+	cout << "step: " << step << " , visiting: " << "(" << x << "," << y << ") ::" << puzzle[x][y] << "---------------------------------------------------" << endl;
 	if (step == puzzle[end.first][end.second])
 	{
 		cout << "SUCCESS" << endl;
@@ -75,23 +75,31 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx)
 
 	for (int i = 0; i < 9; ++i)
 	{
-		cout << "i= " << i << " : step= " << step << " : hint_idx= " << hint_idx << endl;
-		cout << puzzle[x][y] << "  " << puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second] << "  " << hint_temp[hint_idx].second.first << "  " << hint_temp[hint_idx].second.second << " " << puzzle[x + dRow[i]][y + dCol[i]] << endl;
 
 		if (i == 8) {
 			puzzle[x][y] = 0;
 			return;
 		}
-		else if (puzzle[x+dRow[i]][y+dCol[i]] == 0 && step+1 < puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second])// 0을 만났을 경우
-		{
-			Solve(x + dRow[i], y + dCol[i], step+1, hint_idx);
+		else if (x + dRow[i] > 15 || x + dRow[i] < 0 || y + dCol[i] >15 || y + dCol[i] < 0) {
+			cout << "***continue***" << endl;
+			continue;
 		}
-		else if ( (x+dRow[i] ==hint_temp[hint_idx].second.first && y+dCol[i] == hint_temp[hint_idx].second.second) && (step + 1) == puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second]) // hint를 제 때에 만났을 경우
+		else if (puzzle[x + dRow[i]][y + dCol[i]] == 0 && step + 1 < puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second])// 0을 만났을 경우
 		{
-			Solve(x + dRow[i], y + dCol[i], step+1, hint_idx+1);
+			Solve(x + dRow[i], y + dCol[i], step + 1, hint_idx);
 		}
-			
-	
+		else if ((x + dRow[i] == hint_temp[hint_idx].second.first && y + dCol[i] == hint_temp[hint_idx].second.second) && (step + 1) == puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second]) // hint를 제 때에 만났을 경우
+		{
+			Solve(x + dRow[i], y + dCol[i], step + 1, hint_idx + 1);
+		}
+		else if (i == 7) {
+			puzzle[x][y] = 0;
+			return;
+		}
+
+		cout << "i= " << i << " : step= " << step << " : hint_idx= " << hint_idx << endl;
+		cout << puzzle[x][y] << " : " << puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second] << " : look= " << puzzle[x + dRow[i]][y + dCol[i]] << " : lookX= " << x + dRow[i] << " : lookY= " << y + dCol[i] << endl;
+
 	}
 }
 
