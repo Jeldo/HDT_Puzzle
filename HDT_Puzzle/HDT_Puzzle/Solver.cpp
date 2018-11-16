@@ -59,7 +59,7 @@ void Solver::ShowHint()
 	}
 }
 
-void Solver::Solve(const int& x, const int& y, int step, int hint_idx)
+void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool check)
 {
 	if (step == puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second] && (x != hint_temp[hint_idx].second.first || y != hint_temp[hint_idx].second.second))
 	{
@@ -76,8 +76,11 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx)
 	for (int i = 0; i < 9; ++i)
 	{
 
-		if (i == 8) {
+		if (i == 8 && !check) {
 			puzzle[x][y] = 0;
+			return;
+		}
+		else if (i == 8 && check) {
 			return;
 		}
 		else if (x + dRow[i] > 15 || x + dRow[i] < 0 || y + dCol[i] >15 || y + dCol[i] < 0) {
@@ -86,15 +89,11 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx)
 		}
 		else if (puzzle[x + dRow[i]][y + dCol[i]] == 0 && step + 1 < puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second])// 0을 만났을 경우
 		{
-			Solve(x + dRow[i], y + dCol[i], step + 1, hint_idx);
+			Solve(x + dRow[i], y + dCol[i], step + 1, hint_idx, false);
 		}
 		else if ((x + dRow[i] == hint_temp[hint_idx].second.first && y + dCol[i] == hint_temp[hint_idx].second.second) && (step + 1) == puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second]) // hint를 제 때에 만났을 경우
 		{
-			Solve(x + dRow[i], y + dCol[i], step + 1, hint_idx + 1);
-		}
-		else if (i == 7) {
-			puzzle[x][y] = 0;
-			return;
+			Solve(x + dRow[i], y + dCol[i], step + 1, hint_idx + 1, true);
 		}
 
 		cout << "i= " << i << " : step= " << step << " : hint_idx= " << hint_idx << endl;
@@ -120,5 +119,5 @@ INT_PAIR Solver::getEnd()
 
 void Solver::Initiate()
 {
-	Solve(start.first, start.second, 0, 0);
+	Solve(start.first, start.second, 0, 0, false);
 }

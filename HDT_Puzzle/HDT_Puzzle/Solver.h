@@ -32,7 +32,7 @@ public:
 	void getPuzzle();
 	void ShowPuzzle();
 	void ShowHint();
-	void Solve(const int& x, const int& y, int step, int hint_idx);
+	void Solve(const int& x, const int& y, int step, int hint_idx, bool check);
 	//void Solve(int** puzzle, const int& x, const int& y, int& step, int& hint_idx);
 	int getMax();
 	INT_PAIR getStart();
