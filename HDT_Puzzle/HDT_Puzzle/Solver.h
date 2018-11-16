@@ -23,12 +23,12 @@ private:
 	stack<int> s_step;
 	stack<int**> s_table;
 	stack<INT_PAIR> back;
-
+	vector<pair<int, pair<int, int>>> hint_temp;
 
 public:
 
 	Solver();
-	
+
 	void getPuzzle();
 	void ShowPuzzle();
 	void ShowHint();
@@ -37,4 +37,5 @@ public:
 	int getMax();
 	INT_PAIR getStart();
 	INT_PAIR getEnd();
+	void Initiate();
 };

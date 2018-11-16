@@ -16,7 +16,8 @@ Solver::Solver()
 			puzzle[i][j] = input;
 			if (input != -1 && input != 0)// table입력이 -1, 0 아니면 hint로 판단하고 위치 저장,start&end는 아직
 			{
-				hint.push_back(INT_PAIR(i, j));
+				//hint.push_back(INT_PAIR(i, j));
+				hint_temp.push_back(make_pair(puzzle[i][j], INT_PAIR(i, j)));
 			}
 			if (input == 1)
 			{
@@ -29,6 +30,7 @@ Solver::Solver()
 			}
 		}
 	}
+	sort(hint_temp.begin(), hint_temp.end());
 }
 
 void Solver::getPuzzle()
@@ -49,39 +51,47 @@ void Solver::ShowPuzzle()
 
 void Solver::ShowHint()
 {
-	vector<INT_PAIR>::iterator it;
-	for (it = hint.begin(); it != hint.end(); ++it)
+	vector<pair<int, pair<int, int>>>::iterator it;
+	for (it = hint_temp.begin(); it != hint_temp.end(); ++it)
 	{
-		cout << (*it).first << " " << (*it).second << endl;
+		//cout << puzzle[(*it).first][(*it).second]<<" :::: "<<(*it).first << " " << (*it).second << endl;
+		cout << (*it).first << " :::: " << (*it).second.first << " " << (*it).second.second << endl;
 	}
 }
 
 void Solver::Solve(const int& x, const int& y, int step, int hint_idx)
 {
-	++step;
-	if (step == puzzle[hint[hint_idx].first][hint[hint_idx].second] && (x != hint[hint_idx].first || y != hint[hint_idx].second))
+	if (step == puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second] && (x != hint_temp[hint_idx].second.first || y != hint_temp[hint_idx].second.second))
 	{
 		return;
 	}
 	puzzle[x][y] = step;
-	//path.push(INT_PAIR(x, y));
+	cout << "step: " << step << " , visiting: " << "(" << x << "," << y << ") ::" << puzzle[x][y] << "------------------"<< endl;
 	if (step == puzzle[end.first][end.second])
 	{
 		cout << "SUCCESS" << endl;
 		return;
 	}
 
-	for (int i = 0; i < 8; ++i)
+	for (int i = 0; i < 9; ++i)
 	{
-		if (puzzle[x][y] == 0 && step < puzzle[hint[hint_idx].first][hint[hint_idx].second])// 0을 만났을 경우
-		{
-			Solve(x + dx[i], y + dy[i], step, hint_idx);
+		cout << "i= " << i << " : step= " << step << " : hint_idx= " << hint_idx << endl;
+		cout << puzzle[x][y] << "  " << puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second] << "  " << hint_temp[hint_idx].second.first << "  " << hint_temp[hint_idx].second.second << " " << puzzle[x + dRow[i]][y + dCol[i]] << endl;
+
+		if (i == 8) {
+			puzzle[x][y] = 0;
+			return;
 		}
-		else if (step == puzzle[hint[hint_idx].first][hint[hint_idx].second]) // hint를 제 때에 만났을 경우
+		else if (puzzle[x+dRow[i]][y+dCol[i]] == 0 && step+1 < puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second])// 0을 만났을 경우
 		{
-			Solve(x + dx[i], y + dy[i], step, hint_idx);
-			++hint_idx;
+			Solve(x + dRow[i], y + dCol[i], step+1, hint_idx);
 		}
+		else if ( (x+dRow[i] ==hint_temp[hint_idx].second.first && y+dCol[i] == hint_temp[hint_idx].second.second) && (step + 1) == puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second]) // hint를 제 때에 만났을 경우
+		{
+			Solve(x + dRow[i], y + dCol[i], step+1, hint_idx+1);
+		}
+			
+	
 	}
 }
 
@@ -98,4 +108,9 @@ INT_PAIR Solver::getStart()
 INT_PAIR Solver::getEnd()
 {
 	return INT_PAIR(end);
+}
+
+void Solver::Initiate()
+{
+	Solve(start.first, start.second, 0, 0);
 }
