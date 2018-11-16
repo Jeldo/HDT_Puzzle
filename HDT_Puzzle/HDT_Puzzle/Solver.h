@@ -7,6 +7,8 @@
 
 using namespace std;
 
+
+
 class Solver {
 private:
 
@@ -20,6 +22,9 @@ private:
 	ifstream fin;
 	stack<int> s_step;
 	stack<int**> s_table;
+	stack<INT_PAIR> back;
+
+
 
 public:
 
@@ -28,7 +33,7 @@ public:
 	void ShowPuzzle();
 	void ShowHint();
 	//void Solve(int** puzzle, const int& x, const int& y, int& step, const VEC_PAIR& hint, int& hint_idx, STK_PAIR& path);
-	void Solve(int** puzzle, const int& x, const int& y, int& step, int& hint_idx);
+	void Solve(int** puzzle, const int& x, const int& y, int& step, int& hint_idx, int cnt);
 	int getMax();
 	INT_PAIR getEnd();
 };

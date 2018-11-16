@@ -118,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GeneratorC.cpp" />
     <ClCompile Include="HidatoMain.cpp" />
     <ClCompile Include="Solver.cpp" />
   </ItemGroup>

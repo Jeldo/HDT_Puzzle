@@ -1,5 +1,6 @@
 #include "Solver.h"
 
+
 Solver::Solver()
 {
 	fin.open("puzzle.txt");
@@ -51,11 +52,12 @@ void Solver::ShowHint()
 	}
 }
 
-void Solver::Solve(int** puzzle, const int& x, const int& y, int& step, int& hint_idx)
+void Solver::Solve(int** puzzle, const int& x, const int& y, int& step, int& hint_idx, int cnt)
 {
 	puzzle[x][y] = step;
 	path.push(INT_PAIR(x, y));
 	++step;
+	bool goBack = true;
 
 	if (step == puzzle[end.first][end.second])
 	{
@@ -65,14 +67,26 @@ void Solver::Solve(int** puzzle, const int& x, const int& y, int& step, int& hin
 	{
 		if (puzzle[x][y] == 0 && step < puzzle[hint[hint_idx].first][hint[hint_idx].second])// 0을 만났을 경우
 		{
-			Solve(puzzle, x + dx[i], y + dy[i], step, hint_idx);
+			cnt++;
+			Solve(puzzle, x + dx[i], y + dy[i], step, hint_idx, cnt);
+			goBack = false;
 		}
 		else if (step == puzzle[hint[hint_idx].first][hint[hint_idx].second]) // hint를 제 때에 만났을 경우
 		{
-			Solve(puzzle, x + dx[i], y + dy[i], step, hint_idx);
+			cnt = 0;
+			Solve(puzzle, x + dx[i], y + dy[i], step, hint_idx, cnt);
+			goBack = false;
 		}
 	}
-	//만나지 못한 경우, 이전 힌트 단계까지 돌려놔야함.
+	
+	if (goBack) {
+		while (cnt--) {
+
+		}
+		Solve(puzzle, x)
+	}
+	//만나지 못한 경우, 이전 힌트 단계까지 돌려놔야함.백트랙킹
+	
 
 }
 
