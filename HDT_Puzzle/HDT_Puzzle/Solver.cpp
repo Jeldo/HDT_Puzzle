@@ -52,12 +52,44 @@ void Solver::ShowHint()
 	}
 }
 
-void Solver::Solve(int** puzzle, const int& x, const int& y, int& step, int& hint_idx, int cnt)
+void Solver::Solve(int** puzzle, const int& x, const int& y, int& step, int& hint_idx)
+{
+	++step;
+	puzzle[x][y] = step;
+	path.push(INT_PAIR(x, y));
+
+
+	if (step == puzzle[end.first][end.second])
+	{
+		return;
+	}
+	for (int i = 0; i < 8; ++i)
+	{
+		if (puzzle[x][y] == 0 && step < puzzle[hint[hint_idx].first][hint[hint_idx].second])// 0을 만났을 경우
+		{
+			Solve(puzzle, x + dx[i], y + dy[i], step, hint_idx);
+		}
+		else if (step == puzzle[hint[hint_idx].first][hint[hint_idx].second]) // hint를 제 때에 만났을 경우
+		{
+			Solve(puzzle, x + dx[i], y + dy[i], step, hint_idx);
+		}
+		else if (puzzle[x][y] == puzzle[hint[hint_idx].first][hint[hint_idx].second] && !(x == hint[hint_idx].first && y == hint[hint_idx].second)) {
+			puzzle[x][y] = 0;
+			return;
+
+		}
+	}
+	
+	//만나지 못한 경우, 이전 힌트 단계까지 돌려놔야함.백트랙킹
+	
+
+}
+
+void Solver::Solve2(int** puzzle, const int& x, const int& y, int& step, int& hint_idx, int cnt)
 {
 	puzzle[x][y] = step;
 	path.push(INT_PAIR(x, y));
 	++step;
-	bool goBack = true;
 
 	if (step == puzzle[end.first][end.second])
 	{
@@ -65,29 +97,19 @@ void Solver::Solve(int** puzzle, const int& x, const int& y, int& step, int& hin
 	}
 	for (int i = 0; i < 8; ++i)
 	{
+		int dif = puzzle[hint[hint_idx].first][hint[hint_idx].second];
+		
 		if (puzzle[x][y] == 0 && step < puzzle[hint[hint_idx].first][hint[hint_idx].second])// 0을 만났을 경우
 		{
-			cnt++;
-			Solve(puzzle, x + dx[i], y + dy[i], step, hint_idx, cnt);
-			goBack = false;
+			Solve2(puzzle, x + dx[i], y + dy[i], step, hint_idx, cnt);
 		}
 		else if (step == puzzle[hint[hint_idx].first][hint[hint_idx].second]) // hint를 제 때에 만났을 경우
 		{
-			cnt = 0;
-			Solve(puzzle, x + dx[i], y + dy[i], step, hint_idx, cnt);
-			goBack = false;
+			Solve2(puzzle, x + dx[i], y + dy[i], step, hint_idx, cnt);
 		}
 	}
-	
-	if (goBack) {
-		while (cnt--) {
 
-		}
-		Solve(puzzle, x)
-	}
 	//만나지 못한 경우, 이전 힌트 단계까지 돌려놔야함.백트랙킹
-	
-
 }
 
 int Solver::getMax()
