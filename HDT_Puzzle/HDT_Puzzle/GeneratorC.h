@@ -6,7 +6,7 @@
 #include <ctime>
 #include <vector>
 
-#define MAX_SIZE_MAP 15
+#define MAX_SIZE_MAP 16
 #define MAX_VALUE 99
 #define START_NUM 1
 using namespace std;
