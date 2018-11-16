@@ -5,18 +5,22 @@ Solver::Solver()
 {
 	fin.open("puzzle.txt");
 	fin >> puzzle_row >> puzzle_col;
-	table = new int*[puzzle_row];
+	puzzle = new int*[puzzle_row];
 	for (int i = 0; i < puzzle_row; ++i)
 	{
-		table[i] = new int[puzzle_col];
+		puzzle[i] = new int[puzzle_col];
 		for (int j = 0; j < puzzle_col; ++j)
 		{
 			int input;
 			fin >> input;
-			table[i][j] = input;
+			puzzle[i][j] = input;
 			if (input != -1 && input != 0)// table입력이 -1, 0 아니면 hint로 판단하고 위치 저장,start&end는 아직
 			{
 				hint.push_back(INT_PAIR(i, j));
+			}
+			if (input == 1)
+			{
+				start.first = i, start.second = j;
 			}
 			if (input > max)
 			{
@@ -37,7 +41,7 @@ void Solver::ShowPuzzle()
 	{
 		for (int j = 0; j < puzzle_col; ++j)
 		{
-			printf("%3d", table[i][j]);
+			printf("%3d", puzzle[i][j]);
 		}
 		cout << endl;
 	}
@@ -52,69 +56,43 @@ void Solver::ShowHint()
 	}
 }
 
-void Solver::Solve(int** puzzle, const int& x, const int& y, int& step, int& hint_idx)
+void Solver::Solve(const int& x, const int& y, int step, int hint_idx)
 {
 	++step;
-	puzzle[x][y] = step;
-	path.push(INT_PAIR(x, y));
-
-
-	if (step == puzzle[end.first][end.second])
+	if (step == puzzle[hint[hint_idx].first][hint[hint_idx].second] && (x != hint[hint_idx].first || y != hint[hint_idx].second))
 	{
 		return;
 	}
-	for (int i = 0; i < 8; ++i)
-	{
-		if (puzzle[x][y] == 0 && step < puzzle[hint[hint_idx].first][hint[hint_idx].second])// 0을 만났을 경우
-		{
-			Solve(puzzle, x + dx[i], y + dy[i], step, hint_idx);
-		}
-		else if (step == puzzle[hint[hint_idx].first][hint[hint_idx].second]) // hint를 제 때에 만났을 경우
-		{
-			Solve(puzzle, x + dx[i], y + dy[i], step, hint_idx);
-		}
-		else if (puzzle[x][y] == puzzle[hint[hint_idx].first][hint[hint_idx].second] && !(x == hint[hint_idx].first && y == hint[hint_idx].second)) {
-			puzzle[x][y] = 0;
-			return;
-
-		}
-	}
-	
-	//만나지 못한 경우, 이전 힌트 단계까지 돌려놔야함.백트랙킹
-	
-
-}
-
-void Solver::Solve2(int** puzzle, const int& x, const int& y, int& step, int& hint_idx, int cnt)
-{
 	puzzle[x][y] = step;
-	path.push(INT_PAIR(x, y));
-	++step;
-
+	//path.push(INT_PAIR(x, y));
 	if (step == puzzle[end.first][end.second])
 	{
-		//END!
+		cout << "SUCCESS" << endl;
+		return;
 	}
+
 	for (int i = 0; i < 8; ++i)
 	{
-		int dif = puzzle[hint[hint_idx].first][hint[hint_idx].second];
-		
 		if (puzzle[x][y] == 0 && step < puzzle[hint[hint_idx].first][hint[hint_idx].second])// 0을 만났을 경우
 		{
-			Solve2(puzzle, x + dx[i], y + dy[i], step, hint_idx, cnt);
+			Solve(x + dx[i], y + dy[i], step, hint_idx);
 		}
 		else if (step == puzzle[hint[hint_idx].first][hint[hint_idx].second]) // hint를 제 때에 만났을 경우
 		{
-			Solve2(puzzle, x + dx[i], y + dy[i], step, hint_idx, cnt);
+			Solve(x + dx[i], y + dy[i], step, hint_idx);
+			++hint_idx;
 		}
 	}
-
-	//만나지 못한 경우, 이전 힌트 단계까지 돌려놔야함.백트랙킹
 }
 
 int Solver::getMax()
 {
 	return max;
+}
+
+INT_PAIR Solver::getStart()
+{
+	return INT_PAIR(start);
 }
 
 INT_PAIR Solver::getEnd()
