@@ -24,6 +24,7 @@ private:
 	stack<int**> s_table;
 	stack<INT_PAIR> back;
 	vector<pair<int, pair<int, int>>> hint_temp;
+	bool isEnd = false;
 
 public:
 

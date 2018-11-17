@@ -55,24 +55,30 @@ void Solver::ShowHint()
 	for (it = hint_temp.begin(); it != hint_temp.end(); ++it)
 	{
 		//cout << puzzle[(*it).first][(*it).second]<<" :::: "<<(*it).first << " " << (*it).second << endl;
-		cout << (*it).first << " :::: " << (*it).second.first << " " << (*it).second.second << endl;
+		//cout << (*it).first << " :::: " << (*it).second.first << " " << (*it).second.second << endl;
 	}
 }
 
 void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool check)
 {
+	if (isEnd)
+	{
+		return;
+	}
+	if (step == puzzle[end.first][end.second])
+	{
+		cout << "SUCCESS" << endl;
+		isEnd = true;
+		return;
+	}
+
 	if (step == puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second] && (x != hint_temp[hint_idx].second.first || y != hint_temp[hint_idx].second.second))
 	{
 		return;
 	}
 	puzzle[x][y] = step;
-	cout << "step: " << step << " , visiting: " << "(" << x << "," << y << ") ::" << puzzle[x][y] << "---------------------------------------------------" << endl;
-	if (step == puzzle[end.first][end.second])
-	{
-		cout << "SUCCESS" << endl;
-		return;
-	}
-
+	//cout << "step: " << step << " , visiting: " << "(" << x << "," << y << ") ::" << puzzle[x][y] << "---------------------------------------------------" << endl;
+	
 	for (int i = 0; i < 9; ++i)
 	{
 
@@ -84,7 +90,7 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool chec
 			return;
 		}
 		else if (x + dRow[i] > 15 || x + dRow[i] < 0 || y + dCol[i] >15 || y + dCol[i] < 0) {
-			cout << "***continue***" << endl;
+			//cout << "***continue***" << endl;
 			continue;
 		}
 		else if (puzzle[x + dRow[i]][y + dCol[i]] == 0 && step + 1 < puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second])// 0을 만났을 경우
@@ -96,9 +102,9 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool chec
 			Solve(x + dRow[i], y + dCol[i], step + 1, hint_idx + 1, true);
 		}
 
-		cout << "i= " << i << " : step= " << step << " : hint_idx= " << hint_idx << endl;
+		/*cout << "i= " << i << " : step= " << step << " : hint_idx= " << hint_idx << endl;
 		cout << puzzle[x][y] << " : " << puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second] << " : look= " << puzzle[x + dRow[i]][y + dCol[i]] << " : lookX= " << x + dRow[i] << " : lookY= " << y + dCol[i] << endl;
-
+*/
 	}
 }
 
