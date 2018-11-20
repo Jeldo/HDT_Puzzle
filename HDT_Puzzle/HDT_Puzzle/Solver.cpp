@@ -14,7 +14,7 @@ Solver::Solver()
 			int input;
 			fin >> input;
 			puzzle[i][j] = input;
-			if (input != -1 && input != 0)// tableÀÔ·ÂÀÌ -1, 0 ¾Æ´Ï¸é hint·Î ÆÇ´ÜÇÏ°í À§Ä¡ ÀúÀå,start&end´Â ¾ÆÁ÷
+			if (input != -1 && input != 0)// tableï¿½Ô·ï¿½ï¿½ï¿½ -1, 0 ï¿½Æ´Ï¸ï¿½ hintï¿½ï¿½ ï¿½Ç´ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½,start&endï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			{
 				//hint.push_back(INT_PAIR(i, j));
 				hint_temp.push_back(make_pair(puzzle[i][j], INT_PAIR(i, j)));
@@ -76,28 +76,33 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool chec
 	{
 		return;
 	}
-	//ÇöÀç stepÀÌ ÇöÀç hint_idx¸¦ ÅëÇØ °¡Á®¿Â puzzleÀÇ ÁÂÇ¥¿¡ ÀÖ´Â step¼ö¿Í °°Àºµ¥
-	//ÇöÀç ÁÂÇ¥°¡ hint_idx¸¦ ÅëÇØ °¡Á®¿Â puzzleÀÇ 'ÁÂÇ¥'¿Í ´Ù¸¦ ¶§ Á¾·á
+	//ï¿½ï¿½ï¿½ï¿½ stepï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ hint_idxï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ puzzleï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½Ö´ï¿½ stepï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ hint_idxï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ puzzleï¿½ï¿½ 'ï¿½ï¿½Ç¥'ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	puzzle[x][y] = step;
 	//cout << "step: " << step << " , visiting: " << "(" << x << "," << y << ") ::" << puzzle[x][y] << "---------------------------------------------------" << endl;
 	for (int i = 0; i < 9; ++i)
 	{
-		if (i == 8 && !check) {
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ Ã¤ï¿½ï¿½é¼­ ï¿½Ô´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½.
+		if (i == 8 && !check) { 
 			puzzle[x][y] = 0;
 			return;
 		}
-		else if (i == 8 && check) {
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½Çµï¿½ï¿½Æ¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´Âµï¿½ ï¿½ï¿½Æ®ï¿½Ú¸ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½×´ï¿½ï¿½ ï¿½ï¿½ï¿½Î´ï¿½ ï¿½ï¿½ï¿½.
+		else if (i == 8 && check) { 
 			return;
 		}
+		//ï¿½ï¿½ Ä­ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´Âµï¿½ hidato puzzleï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½ï¿½ï¿½. ï¿½Æ¹ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 		else if (x + dRow[i] > 15 || x + dRow[i] < 0 || y + dCol[i] >15 || y + dCol[i] < 0) {
 			//cout << "***continue***" << endl;
 			continue;
 		}
-		else if (puzzle[x + dRow[i]][y + dCol[i]] == 0 && step + 1 < puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second])// 0À» ¸¸³µÀ» °æ¿ì
+		//ï¿½ï¿½ Ä­ ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ï¿½ 0ï¿½Ì¸é¼­, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½ ï¿½Û´Ù¸ï¿½ ï¿½ï¿½ Ä­ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½. ï¿½ï¿½Í·ï¿½ È£ï¿½ï¿½.
+		else if (puzzle[x + dRow[i]][y + dCol[i]] == 0 && step + 1 < puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second])// 0ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		{
 			Solve(x + dRow[i], y + dCol[i], step + 1, hint_idx, false);
 		}
-		else if ((x + dRow[i] == hint_temp[hint_idx].second.first && y + dCol[i] == hint_temp[hint_idx].second.second) && (step + 1) == puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second]) // hint¸¦ Á¦ ¶§¿¡ ¸¸³µÀ» °æ¿ì
+		//ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½. ï¿½ï¿½Æ® ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï¸é¼­, ï¿½ï¿½Æ® ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½Ä¡ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+		else if ((x + dRow[i] == hint_temp[hint_idx].second.first && y + dCol[i] == hint_temp[hint_idx].second.second) && (step + 1) == puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second]) 
 		{
 			Solve(x + dRow[i], y + dCol[i], step + 1, hint_idx + 1, true);
 		}
