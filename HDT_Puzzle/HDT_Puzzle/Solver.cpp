@@ -81,23 +81,27 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool chec
 	
 	for (int i = 0; i < 9; ++i)
 	{
-
-		if (i == 8 && !check) {
+		//길이 막혔을 때 숫자를 채우면서 왔던 길을 다시 0으로 만드는 부분.
+		if (i == 8 && !check) { 
 			puzzle[x][y] = 0;
 			return;
 		}
-		else if (i == 8 && check) {
+		//길이 막혀서 왔던 길을 다시 되돌아오려고 하는데 힌트자리라서 0으로 바꾸지 않고 숫자를 그대로 놔두는 경우.
+		else if (i == 8 && check) { 
 			return;
 		}
+		//한 칸을 더 가기위해 탐색을 하는데 hidato puzzle판을 넘어가는 경우. 아무일도 안하고 진행한다.
 		else if (x + dRow[i] > 15 || x + dRow[i] < 0 || y + dCol[i] >15 || y + dCol[i] < 0) {
 			//cout << "***continue***" << endl;
 			continue;
 		}
+		//한 칸 진행하려는 부분이 0이면서, 다음 힌트인 숫자보다 작다면 한 칸 진행한다. 재귀로 호출.
 		else if (puzzle[x + dRow[i]][y + dCol[i]] == 0 && step + 1 < puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second])// 0을 만났을 경우
 		{
 			Solve(x + dRow[i], y + dCol[i], step + 1, hint_idx, false);
 		}
-		else if ((x + dRow[i] == hint_temp[hint_idx].second.first && y + dCol[i] == hint_temp[hint_idx].second.second) && (step + 1) == puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second]) // hint를 제 때에 만났을 경우
+		//힌트를 제때에 만난 경우. 힌트 좌표와 일치하면서, 힌트 숫자도 일치하면 진행한다.
+		else if ((x + dRow[i] == hint_temp[hint_idx].second.first && y + dCol[i] == hint_temp[hint_idx].second.second) && (step + 1) == puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second]) 
 		{
 			Solve(x + dRow[i], y + dCol[i], step + 1, hint_idx + 1, true);
 		}
