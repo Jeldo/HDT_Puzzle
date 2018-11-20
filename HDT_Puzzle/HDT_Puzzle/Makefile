@@ -4,12 +4,11 @@ SOURCES = CommonDef.h\
 	  GeneratorC.cpp\
 	  GeneratorC.h\
 	  HidatoMain.cpp\
-	  HidatoMain.h\
- 	  Solver.cpp\
+	  Solver.cpp\
 	  Solver.h
 
 all:
-	$(CC) -o $(TARGET) $(SOURCES)
+	$(CC) $(SOURCES)
 
 clean:
 	rm -rf *.o $(TARGET)
