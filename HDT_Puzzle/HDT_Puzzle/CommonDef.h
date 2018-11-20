@@ -2,8 +2,8 @@
 
 #define MAX 15
 #define MIN 5
-#define VEC_PAIR vector<pair<int,int>>
-#define STK_PAIR stack<pair<int,int>>
+#define VEC_PAIR vector<pair<int,int> >
+#define STK_PAIR stack<pair<int,int> >
 #define INT_PAIR pair<int,int>
 
 //남 남서 서 북서 북 북동 동 남동 아니죠

@@ -51,7 +51,7 @@ void Solver::ShowPuzzle()
 
 void Solver::ShowHint()
 {
-   vector<pair<int, pair<int, int>>>::iterator it;
+   vector<pair<int, pair<int, int> > >::iterator it;
    for (it = hint_temp.begin(); it != hint_temp.end(); ++it)
    {
       //cout << puzzle[(*it).first][(*it).second]<<" :::: "<<(*it).first << " " << (*it).second << endl;
