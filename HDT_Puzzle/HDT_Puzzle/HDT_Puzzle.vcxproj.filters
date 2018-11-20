@@ -32,6 +32,9 @@
     <ClInclude Include="CommonDef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GeneratorC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="puzzle.txt">

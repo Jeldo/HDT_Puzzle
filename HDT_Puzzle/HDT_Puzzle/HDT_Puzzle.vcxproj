@@ -127,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonDef.h" />
+    <ClInclude Include="GeneratorC.h" />
     <ClInclude Include="Solver.h" />
   </ItemGroup>
   <ItemGroup>

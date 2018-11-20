@@ -15,7 +15,6 @@ private:
     vector<int> hintVecCol;
     vector<int> hintNum;
     
-    
 public:
     Generator(){
         //First Step : maxMap 초기화 -1

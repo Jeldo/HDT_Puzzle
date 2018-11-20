@@ -68,20 +68,20 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool chec
 	if (step == puzzle[end.first][end.second])
 	{
 		cout << "SUCCESS" << endl;
+		//cout << end.first << " " << end.second << endl;
 		isEnd = true;
 		return;
 	}
-
 	if (step == puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second] && (x != hint_temp[hint_idx].second.first || y != hint_temp[hint_idx].second.second))
 	{
 		return;
 	}
+	//현재 step이 현재 hint_idx를 통해 가져온 puzzle의 좌표에 있는 step수와 같은데
+	//현재 좌표가 hint_idx를 통해 가져온 puzzle의 '좌표'와 다를 때 종료
 	puzzle[x][y] = step;
 	//cout << "step: " << step << " , visiting: " << "(" << x << "," << y << ") ::" << puzzle[x][y] << "---------------------------------------------------" << endl;
-	
 	for (int i = 0; i < 9; ++i)
 	{
-
 		if (i == 8 && !check) {
 			puzzle[x][y] = 0;
 			return;
@@ -125,5 +125,5 @@ INT_PAIR Solver::getEnd()
 
 void Solver::Initiate()
 {
-	Solve(start.first, start.second, 0, 0, false);
+	Solve(start.first, start.second, 1, 1, false);
 }
