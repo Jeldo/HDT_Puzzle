@@ -6,12 +6,14 @@
 #define STK_PAIR stack<pair<int,int>>
 #define INT_PAIR pair<int,int>
 
-static int dx[8] = { -1,-1,0,1,1,1,0,-1 };
-static int dy[8] = { 0,-1,-1,-1,0,1,1,1 };
+//남 남서 서 북서 북 북동 동 남동 아니죠
+//북 북서 서 남서 남 남동 동 북동
+static int dRow[8] = { -1,-1,0,1,1,1,0,-1 };
+static int dCol[8] = { 0,-1,-1,-1,0,1,1,1 };
 
-//Pos �Ⱦ��� Pair�� �ҵ�..?
+//Pos 안쓰고 Pair로 할듯..?
 struct Pos
 {
-	int x;
-	int y;
+   int x;
+   int y;
 };

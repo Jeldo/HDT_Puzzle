@@ -11,30 +11,32 @@ using namespace std;
 class Solver {
 private:
 
-	//≥≤ ≥≤º≠ º≠ ∫œº≠ ∫œ ∫œµø µø ≥≤µø
-	int puzzle_row, puzzle_col;
-	int** puzzle;
-	int max = 0;
-	VEC_PAIR hint;
-	STK_PAIR path;
-	INT_PAIR start;
-	INT_PAIR end;
-	ifstream fin;
-	stack<int> s_step;
-	stack<int**> s_table;
-	stack<INT_PAIR> back;
-
+   //ÎÇ® ÎÇ®ÏÑú ÏÑú Î∂ÅÏÑú Î∂Å Î∂ÅÎèô Îèô ÎÇ®Îèô
+   int puzzle_row, puzzle_col;
+   int** puzzle;
+   int max = 0;
+   VEC_PAIR hint;
+   STK_PAIR path;
+   INT_PAIR start;
+   INT_PAIR end;
+   ifstream fin;
+   stack<int> s_step;
+   stack<int**> s_table;
+   stack<INT_PAIR> back;
+   vector<pair<int, pair<int, int>>> hint_temp;
+   bool isEnd = false;
 
 public:
 
-	Solver();
-	
-	void getPuzzle();
-	void ShowPuzzle();
-	void ShowHint();
-	void Solve(const int& x, const int& y, int step, int hint_idx);
-	//void Solve(int** puzzle, const int& x, const int& y, int& step, int& hint_idx);
-	int getMax();
-	INT_PAIR getStart();
-	INT_PAIR getEnd();
+   Solver();
+
+   void getPuzzle();
+   void ShowPuzzle();
+   void ShowHint();
+   void Solve(const int& x, const int& y, int step, int hint_idx, bool check);
+   //void Solve(int** puzzle, const int& x, const int& y, int& step, int& hint_idx);
+   int getMax();
+   INT_PAIR getStart();
+   INT_PAIR getEnd();
+   void Initiate();
 };
