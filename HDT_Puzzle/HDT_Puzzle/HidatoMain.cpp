@@ -10,6 +10,6 @@ int main(void)
 	sol.ShowHint();
 	cout << sol.getMax() << endl;
 	cout << sol.getEnd().first << " " << sol.getEnd().second << endl;
-	sol.Solve(sol.getStart().first, sol.getStart().second, 0, 0);
+	sol.Initiate();
 	return 0;
 }

@@ -131,5 +131,5 @@ INT_PAIR Solver::getEnd()
 
 void Solver::Initiate()
 {
-   Solve(start.first, start.second, 0, 0, false);
+   Solve(start.first, start.second, 1, 1, false);
 }
