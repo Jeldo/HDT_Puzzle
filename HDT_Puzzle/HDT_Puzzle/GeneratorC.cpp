@@ -2,11 +2,15 @@
 
 
 Generator::Generator(){
+
+    
+
     //First Step : maxMap 초기화 -1
     for(int row = 0; row < MAX_SIZE_MAP; row++){
         for(int col = 0; col < MAX_SIZE_MAP; col++){
             maxMap[row][col] = -1;
             maxMap_Solution[row][col] = -1;
+            //mapTemp[row][col] = -1;
         }
     }
     //value = 0;
@@ -26,7 +30,7 @@ int Generator::getStartCol(){
 void Generator::GeneratorPuzzle(int x, int y, int value){
     maxMap_Solution[x][y] = value;
     
-    if(rand()%10 < 3 || value == 13 || value == 1){
+    if(rand()%10 < 3 || value == 13 || value == 1 || value == MAX_VALUE){
         maxMap[x][y] = value;
         hintVecRow.push_back(x);
         hintVecCol.push_back(y);
@@ -73,8 +77,8 @@ void Generator::GeneratorPuzzle(int x, int y, int value){
     }
     
     //모든 방향 이동 불가능
-    if(stopCount == 7){
-        //return;
+    if(stopCount >= 7){
+        maxMap[x][y] = value-1;
     }
 }
 
@@ -160,34 +164,39 @@ vector<vector<int> > Generator::getHint(){
     return temp;
 }
 
+// int** Generator::getPuzzleTemp(){
+//     return this->mapTemp;
+// }
+
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2
 //main 함수(주석 해제해서 사용)
-// int main(){
+int main(){
    
-//    //Random seed 초기화
-//    //진짜로 Random을 하려면 seed값을 매번 바꿔주어야하기 때문에
-//    //실행 시 최초로 한번은 실행이 되어야 한다.
-//    srand((unsigned int) time(NULL));
+   //Random seed 초기화
+   //진짜로 Random을 하려면 seed값을 매번 바꿔주어야하기 때문에
+   //실행 시 최초로 한번은 실행이 되어야 한다.
+   srand((unsigned int) time(NULL));
    
-//    Generator Gen;
+   Generator Gen;
    
-//    int startX = Gen.getStartRow();
-//    int startY = Gen.getStartCol();
+   int startX = Gen.getStartRow();
+   int startY = Gen.getStartCol();
    
-//    Gen.GeneratorPuzzle(startX,startY,START_NUM);
-   
-//    //getPuzzle()호춯
+   Gen.GeneratorPuzzle(startX,startY,START_NUM);
+   //int** temp = Gen.getPuzzleTemp();
+   //cout<<temp+1<<endl;
+   //getPuzzle()호춯
 //    for(int i = 0; i < MAX_SIZE_MAP; i++){
 //        for(int j = 0; j < MAX_SIZE_MAP; j++){
-//            cout<<Gen.getPuzzle()[i][j]<<" ";
+//            //cout<<temp[i][j]<<" ";
 //        }
 //        cout<<endl;
 //    }
    
-//    //Gen.ShowPuzzle();
-//    //Gen.ShowCompletePuzzle();
-//    //Gen.ShowEndNumber();
-//    //Gen.ShowHint();
+   Gen.ShowPuzzle();
+   //Gen.ShowCompletePuzzle();
+   Gen.ShowEndNumber();
+   //Gen.ShowHint();
    
-//    return 0;
-// }
+   return 0;
+}
