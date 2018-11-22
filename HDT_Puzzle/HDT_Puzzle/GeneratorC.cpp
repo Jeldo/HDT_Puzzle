@@ -156,6 +156,8 @@ vector<vector<int> > Generator::getHint(){
     temp.push_back(this->hintVecRow);
     temp.push_back(this->hintVecCol);
     temp.push_back(this->hintNum);
+
+    return temp;
 }
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2
