@@ -60,14 +60,14 @@ void Generator::GeneratorPuzzle(int x, int y, int value){
     for(int i = 0; i < 8; i++){
         int idx = (ran + i)%8;
         //만약 maxMap을 벗어난다면
-        if(x + dirRow[idx] < 0 || x + dirRow[idx] > MAX_SIZE_MAP-1
-            || y + dirCol[idx] < 0 || y + dirCol[idx] > MAX_SIZE_MAP-1
-            || maxMap[x + dirRow[idx]][y + dirCol[idx]] != -1){
+        if(x + dRow[idx] < 0 || x + dRow[idx] > MAX_SIZE_MAP-1
+            || y + dCol[idx] < 0 || y + dCol[idx] > MAX_SIZE_MAP-1
+            || maxMap[x + dRow[idx]][y + dCol[idx]] != -1){
             stopCount++;
         }
         //막힌 곳이 없다면
         else{
-            GeneratorPuzzle(x + dirRow[idx], y + dirCol[idx], value);
+            GeneratorPuzzle(x + dRow[idx], y + dCol[idx], value);
             break;
         }
     }
