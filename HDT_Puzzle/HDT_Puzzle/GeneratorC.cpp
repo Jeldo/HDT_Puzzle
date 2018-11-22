@@ -170,33 +170,33 @@ vector<vector<int> > Generator::getHint(){
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2
 //main 함수(주석 해제해서 사용)
-int main(){
+// int main(){
    
-   //Random seed 초기화
-   //진짜로 Random을 하려면 seed값을 매번 바꿔주어야하기 때문에
-   //실행 시 최초로 한번은 실행이 되어야 한다.
-   srand((unsigned int) time(NULL));
+//    //Random seed 초기화
+//    //진짜로 Random을 하려면 seed값을 매번 바꿔주어야하기 때문에
+//    //실행 시 최초로 한번은 실행이 되어야 한다.
+//    srand((unsigned int) time(NULL));
    
-   Generator Gen;
+//    Generator Gen;
    
-   int startX = Gen.getStartRow();
-   int startY = Gen.getStartCol();
+//    int startX = Gen.getStartRow();
+//    int startY = Gen.getStartCol();
    
-   Gen.GeneratorPuzzle(startX,startY,START_NUM);
-   //int** temp = Gen.getPuzzleTemp();
-   //cout<<temp+1<<endl;
-   //getPuzzle()호춯
-//    for(int i = 0; i < MAX_SIZE_MAP; i++){
-//        for(int j = 0; j < MAX_SIZE_MAP; j++){
-//            //cout<<temp[i][j]<<" ";
-//        }
-//        cout<<endl;
-//    }
+//    Gen.GeneratorPuzzle(startX,startY,START_NUM);
+//    //int** temp = Gen.getPuzzleTemp();
+//    //cout<<temp+1<<endl;
+//    //getPuzzle()호춯
+// //    for(int i = 0; i < MAX_SIZE_MAP; i++){
+// //        for(int j = 0; j < MAX_SIZE_MAP; j++){
+// //            //cout<<temp[i][j]<<" ";
+// //        }
+// //        cout<<endl;
+// //    }
    
-   Gen.ShowPuzzle();
-   //Gen.ShowCompletePuzzle();
-   Gen.ShowEndNumber();
-   //Gen.ShowHint();
+//    Gen.ShowPuzzle();
+//    //Gen.ShowCompletePuzzle();
+//    Gen.ShowEndNumber();
+//    //Gen.ShowHint();
    
-   return 0;
-}
+//    return 0;
+// }
