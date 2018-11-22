@@ -13,7 +13,10 @@ int main(void)
 	int startX = Gen.getStartRow();
 	int startY = Gen.getStartCol();
 	Gen.GeneratorPuzzle(startX, startY, START_NUM);
+	Gen.getEndNumber();
 	Gen.ShowPuzzle();
+	Gen.ShowCompletePuzzle();
+	Gen.ShowHint();
 
 	Solver sol;
 	//sol.setPuzzlePtr(Gen.getPuzzle());
@@ -21,7 +24,11 @@ int main(void)
 	cout << sol.getMax() << endl;
 	cout << sol.getEnd().first << " " << sol.getEnd().second << endl;
 	sol.ShowPuzzle();
+	clock_t begin, end;
+	begin = clock();
 	sol.Initiate();
+	end = clock();
 	sol.ShowPuzzle();
+	cout << endl << "Time: " << end - begin << "ms" << endl;
 	return 0;
 }

@@ -21,7 +21,6 @@ private:
 public:
 
 	Solver();
-
 	void setPuzzlePtr(int** gen_puzzle);//get puzzle table ptr from Generator
 	void setSolPuzzle(int** gen_puzzle, const int& row_size, const int& col_size);
 	int** getPuzzle();
