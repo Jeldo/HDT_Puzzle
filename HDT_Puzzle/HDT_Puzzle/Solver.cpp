@@ -100,19 +100,19 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool chec
 			return;
 		}
 		//한 칸을 더 가기위해 탐색을 하는데 hidato puzzle판을 넘어가는 경우. 아무일도 안하고 진행한다.
-		else if (x + dirRow[i] > MAX_SIZE_MAP - 1 || x + dirRow[i] < 0 || y + dirCol[i] >MAX_SIZE_MAP - 1 || y + dirCol[i] < 0) {
+		else if (x + dRow[i] > MAX_SIZE_MAP - 1 || x + dRow[i] < 0 || y + dCol[i] >MAX_SIZE_MAP - 1 || y + dCol[i] < 0) {
 			//cout << "***continue***" << endl;
 			continue;
 		}
 		//한 칸 진행하려는 부분이 0이면서, 다음 힌트인 숫자보다 작다면 한 칸 진행한다. 재귀로 호출.
-		else if (puzzle[x + dirRow[i]][y + dirCol[i]] == 0 && step + 1 < puzzle[hint[hint_idx].second.first][hint[hint_idx].second.second])// 0을 만났을 경우
+		else if (puzzle[x + dRow[i]][y + dCol[i]] == 0 && step + 1 < puzzle[hint[hint_idx].second.first][hint[hint_idx].second.second])// 0을 만났을 경우
 		{
-			Solve(x + dirRow[i], y + dirCol[i], step + 1, hint_idx, false);
+			Solve(x + dRow[i], y + dCol[i], step + 1, hint_idx, false);
 		}
 		//힌트를 제때에 만난 경우. 힌트 좌표와 일치하면서, 힌트 숫자도 일치하면 진행한다.
-		else if ((x + dirRow[i] == hint[hint_idx].second.first && y + dirCol[i] == hint[hint_idx].second.second) && (step + 1) == puzzle[hint[hint_idx].second.first][hint[hint_idx].second.second])
+		else if ((x + dRow[i] == hint[hint_idx].second.first && y + dCol[i] == hint[hint_idx].second.second) && (step + 1) == puzzle[hint[hint_idx].second.first][hint[hint_idx].second.second])
 		{
-			Solve(x + dirRow[i], y + dirCol[i], step + 1, hint_idx + 1, true);
+			Solve(x + dRow[i], y + dCol[i], step + 1, hint_idx + 1, true);
 		}
 
 		/*cout << "i= " << i << " : step= " << step << " : hint_idx= " << hint_idx << endl;
