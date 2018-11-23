@@ -1,29 +1,30 @@
 #include "GeneratorC.h"
 
 
-Generator::Generator(){
+Generator::Generator() {
+	//First Step : maxMap 초기화 -1
 
-    
+	maxMap = new int*[MAX_SIZE_MAP];
+	maxMap_Solution = new int*[MAX_SIZE_MAP];
+	for (int row = 0; row < MAX_SIZE_MAP; row++) {
+		maxMap[row] = new int[MAX_SIZE_MAP];
+		maxMap_Solution[row] = new int[MAX_SIZE_MAP];
+		for (int col = 0; col < MAX_SIZE_MAP; col++) {
+			maxMap[row][col] = -1;
+			maxMap_Solution[row][col] = -1;
+		}
+	}
+	//value = 0;
 
-    //First Step : maxMap 초기화 -1
-    for(int row = 0; row < MAX_SIZE_MAP; row++){
-        for(int col = 0; col < MAX_SIZE_MAP; col++){
-            maxMap[row][col] = -1;
-            maxMap_Solution[row][col] = -1;
-            //mapTemp[row][col] = -1;
-        }
-    }
-    //value = 0;
-    
-    this->stRow = MAX_SIZE_MAP/2;
-    this->stCol = MAX_SIZE_MAP/2;
+	this->stRow = MAX_SIZE_MAP / 2;
+	this->stCol = MAX_SIZE_MAP / 2;
 }
 
-int Generator::getStartRow(){
-    return this->stRow;
+int Generator::getStartRow() {
+	return this->stRow;
 }
-int Generator::getStartCol(){
-    return this->stCol;
+int Generator::getStartCol() {
+	return this->stCol;
 }
 
 //시작x, 시작y, 바꿀 숫자
@@ -83,85 +84,94 @@ void Generator::GeneratorPuzzle(int x, int y, int value){
 }
 
 //풀어야할 퍼즐 출력
-void Generator::ShowPuzzle(){
-    
-    //맵 확인 변수(제거 후)
-    cout<<"----------------------------------------------------"<<endl;
-    
-    for(int row = 0; row < MAX_SIZE_MAP; row++){
-        for(int col = 0; col < MAX_SIZE_MAP; col++){
-            //if(maxMap[row][col] == -1){
-            //    cout<<"   ";
-            //}
-            //else{
-            if(maxMap[row][col] >= 0 && maxMap[row][col] < 10)
-                cout<<" ";
-            cout<<maxMap[row][col]<<" ";
-            //}
-            
-        }
-        cout<<endl;
-    }
-    cout<<"----------------------------------------------------"<<endl;
+void Generator::ShowPuzzle() {
+
+	//맵 확인 변수(제거 후)
+	cout << "----------------------------------------------------" << endl;
+
+	for (int row = 0; row < MAX_SIZE_MAP; row++) {
+		for (int col = 0; col < MAX_SIZE_MAP; col++) {
+			//if(maxMap[row][col] == -1){
+			//    cout<<"   ";
+			//}
+			//else{
+			if (maxMap[row][col] >= 0 && maxMap[row][col] < 10)
+				cout << " ";
+			cout << maxMap[row][col] << " ";
+			//}
+
+		}
+		cout << endl;
+	}
+	cout << "----------------------------------------------------" << endl;
 }
 
 //정답 퍼즐 출력
-void Generator::ShowCompletePuzzle(){
-    cout<<endl<<"----------------------------------------------------"<<endl;
-    //맵 확인 변수(제거 전)
-    for(int row = 0; row < MAX_SIZE_MAP; row++){
-        for(int col = 0; col < MAX_SIZE_MAP; col++){
-            
-            if(maxMap_Solution[row][col] >= 0 && maxMap_Solution[row][col] < 10)
-                cout<<" ";
-            cout<<maxMap_Solution[row][col]<<" ";
-        }
-        cout<<endl;
-    }
-    cout<<"----------------------------------------------------"<<endl;
+void Generator::ShowCompletePuzzle() {
+	cout << endl << "----------------------------------------------------" << endl;
+	//맵 확인 변수(제거 전)
+	for (int row = 0; row < MAX_SIZE_MAP; row++) {
+		for (int col = 0; col < MAX_SIZE_MAP; col++) {
+
+			if (maxMap_Solution[row][col] >= 0 && maxMap_Solution[row][col] < 10)
+				cout << " ";
+			cout << maxMap_Solution[row][col] << " ";
+		}
+		cout << endl;
+	}
+	cout << "----------------------------------------------------" << endl;
 }
 
 //최종 숫자 출력
-void Generator::ShowEndNumber(){
-    cout<<"----------------------------------------------------"<<endl;
-    cout<<"END NUMBER : "<<curValue<<endl;
-    cout<<"----------------------------------------------------"<<endl;
+void Generator::ShowEndNumber() {
+	cout << "----------------------------------------------------" << endl;
+	cout << "END NUMBER : " << curValue << endl;
+	cout << "----------------------------------------------------" << endl;
 }
 
 //최종 숫자 출력
-int Generator::getEndNumber(){
-    cout<<"----------------------------------------------------"<<endl;
-    cout<<"END NUMBER : "<<curValue<<endl;
-    cout<<"----------------------------------------------------"<<endl;
-    return curValue;
+int Generator::getEndNumber() {
+	cout << "----------------------------------------------------" << endl;
+	cout << "END NUMBER : " << curValue << endl;
+	cout << "----------------------------------------------------" << endl;
+	return curValue;
 }
 
 //힌트 출력
-void Generator::ShowHint(){
-    cout<<"----------------------------------------------------"<<endl;
-    cout<<"HINT (count: "<< hintVecRow.size()<<") : ";
-    for(int i = 0; i < hintVecRow.size(); i++){
-        cout<<hintNum[i]<<"("<<hintVecRow[i]<<","<<hintVecCol[i]<<") ";
-    }
-    cout<<"----------------------------------------------------"<<endl;
+void Generator::ShowHint() {
+	cout << "----------------------------------------------------" << endl;
+	cout << "HINT (count: " << hintVecRow.size() << ") : ";
+	for (int i = 0; i < hintVecRow.size(); i++) {
+		cout << hintNum[i] << "(" << hintVecRow[i] << "," << hintVecCol[i] << ") ";
+	}
+	cout << "----------------------------------------------------" << endl;
 }
 
-int(*Generator::getPuzzle() )[MAX_SIZE_MAP]{
-    return this->maxMap;
+int ** Generator::getPuzzle()
+{
+	return maxMap;
 }
 
-int(*Generator::getCompletePuzzle() )[MAX_SIZE_MAP]{
-    return this->maxMap_Solution;
+int** Generator::getCompletePuzzle()
+{
+	return maxMap_Solution;
 }
 
-vector<vector<int> > Generator::getHint(){
-    vector<vector<int> > temp;
+//int(*Generator::getPuzzle() )[MAX_SIZE_MAP]{
+//    return this->maxMap;
+//}
+//
+//int(*Generator::getCompletePuzzle() )[MAX_SIZE_MAP]{
+//    return this->maxMap_Solution;
+//}
 
-    temp.push_back(this->hintVecRow);
-    temp.push_back(this->hintVecCol);
-    temp.push_back(this->hintNum);
+vector<vector<int> > Generator::getHint() {
+	vector<vector<int> > temp;
 
-    return temp;
+	temp.push_back(this->hintVecRow);
+	temp.push_back(this->hintVecCol);
+	temp.push_back(this->hintNum);
+	return vector<vector<int> >(temp);
 }
 
 // int** Generator::getPuzzleTemp(){
@@ -170,33 +180,23 @@ vector<vector<int> > Generator::getHint(){
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2
 //main 함수(주석 해제해서 사용)
-// int main(){
-   
+//int main(){
+//    
 //    //Random seed 초기화
 //    //진짜로 Random을 하려면 seed값을 매번 바꿔주어야하기 때문에
 //    //실행 시 최초로 한번은 실행이 되어야 한다.
 //    srand((unsigned int) time(NULL));
-   
+//    
 //    Generator Gen;
-   
+//    
 //    int startX = Gen.getStartRow();
 //    int startY = Gen.getStartCol();
-   
+//    
 //    Gen.GeneratorPuzzle(startX,startY,START_NUM);
-//    //int** temp = Gen.getPuzzleTemp();
-//    //cout<<temp+1<<endl;
-//    //getPuzzle()호춯
-// //    for(int i = 0; i < MAX_SIZE_MAP; i++){
-// //        for(int j = 0; j < MAX_SIZE_MAP; j++){
-// //            //cout<<temp[i][j]<<" ";
-// //        }
-// //        cout<<endl;
-// //    }
-   
 //    Gen.ShowPuzzle();
 //    //Gen.ShowCompletePuzzle();
 //    Gen.ShowEndNumber();
 //    //Gen.ShowHint();
-   
+//    
 //    return 0;
-// }
+//}
