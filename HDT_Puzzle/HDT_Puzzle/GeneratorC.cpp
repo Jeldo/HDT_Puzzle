@@ -31,7 +31,7 @@ int Generator::getStartCol() {
 void Generator::GeneratorPuzzle(int x, int y, int value){
     maxMap_Solution[x][y] = value;
     
-    if(rand()%10 < 3 || value == 13 || value == 1 || value == MAX_VALUE){
+    if(rand()%10 < 3 || value % 13 == 0 || value == 1 || value == MAX_VALUE){
         maxMap[x][y] = value;
         hintVecRow.push_back(x);
         hintVecCol.push_back(y);
