@@ -17,16 +17,15 @@ private:
 	INT_PAIR end;
 	vector<pair<int, pair<int, int> > > hint;
 	bool isEnd;
+	int zero_count;
+	int** weight_puzzle;
 
 public:
 
 	Solver();
-	void setPuzzlePtr(int** gen_puzzle);//get puzzle table ptr from Generator
-    void setWeightPuzzlePtr(int** gen_puzzle);//get puzzle table ptr from Generator
 	void setSolPuzzle(int** gen_puzzle, const int& row_size, const int& col_size);
-	void setWeightPuzzle(int** gen_puzzle,const int& row_size,const int& col_size);
-	int** getPuzzle();
-	void ShowWeightPuzzle();
+	void setWeightPuzzle(int** gen_puzzle, const int& row_size, const int& col_size, int& zero_count);
+	//void ShowWeightPuzzle(); TO DO
 	void ShowPuzzle();
 	void ShowHint();
 	void Solve(const int& x, const int& y, int step, int hint_idx, bool check);
