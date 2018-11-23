@@ -2,7 +2,7 @@
 
 
 Solver::Solver()
-	:max(0), isEnd(false)
+:max(0), isEnd(false),zero_count(0);
 {}
 
 void Solver::setPuzzlePtr(int** gen_puzzle) // Don't use this.
@@ -10,39 +10,47 @@ void Solver::setPuzzlePtr(int** gen_puzzle) // Don't use this.
 	this->puzzle = gen_puzzle;
 }
 
-void Solver::setSolPuzzle(int** gen_puzzle, const int& row_size, const int& col_size)
+void Solver::setWeightPuzzlePtr(int** gen_puzzle) // Don't use this.
+{
+    this->weight_puzzle = gen_Puzzle;
+}
+
+
+void Solver::setWeightPuzzle(int** gen_puzzle,const int& row_size,const int& col_size,int zero_count)
 {
 	puzzle_row = row_size;
 	puzzle_col = col_size;
-	puzzle = new int*[puzzle_row];
-	for (int i = 0; i < puzzle_row; ++i)
+	weight_puzzle = new int*[puzzle_row];
+    zero_count = zero_count;
+	for(int i=0 ; i< puzzle_row; i++)
 	{
-		puzzle[i] = new int[puzzle_col];
-		for (int j = 0; j < puzzle_col; ++j)
+		weight_puzzle[i] = new int[puzzle_col];
+		for(int j =0 ; j<puzzle_col ; j++)
 		{
-			puzzle[i][j] = gen_puzzle[i][j];
-			if (gen_puzzle[i][j] != -1 && gen_puzzle[i][j] != 0)// table입력이 -1, 0 아니면 hint로 판단하고 위치 저장,start&end는 아직
+			if(gen_puzzle[i][j] == 0)
 			{
-				hint.push_back(make_pair(puzzle[i][j], INT_PAIR(i, j)));
-			}
-			if (gen_puzzle[i][j] == 1)
-			{
-				start.first = i, start.second = j;
-			}
-			if (gen_puzzle[i][j] > max)
-			{
-				max = gen_puzzle[i][j];
-				end.first = i, end.second = j;
+				int sum = 0;
+				int count = 0;
+				for(int k =0 ; k<8;k++)
+				{
+					if(gen_puzzle[i+dRow[k]][j+dCol[k]] != 0 && gen_puzzle[i+dRow[k]][j+dCol[k]] != -1)
+					{
+                        sum += gen_puzzle[i+dRow[k]][j+dCol[k]];
+						count++;
+					}
+				}
+                if(sum != 0)
+                {
+                    weight_puzzle[i][j] = sum/count;
+                    zero_count--;
+                    if (!zero_count) return;
+                }
 			}
 		}
 	}
-	sort(hint.begin(), hint.end());
+    setWeightPuzzle(weight_puzzle,15,15,zero_count);
 }
 
-int** Solver::getPuzzle()
-{
-	return puzzle;
-}
 
 void Solver::ShowPuzzle()
 {
