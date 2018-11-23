@@ -87,9 +87,16 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool chec
 	}
 	puzzle[x][y] = step;
 	//cout << "step: " << step << " , visiting: " << "(" << x << "," << y << ") ::" << puzzle[x][y] << "---------------------------------------------------" << endl;
+	int lookX, lookY, stepMax, difX, difY;
+	int difStep = (puzzle[hint[hint_idx].second.first][hint[hint_idx].second.second] - step - 1);
 
 	for (int i = 0; i < 9 && !isEnd; ++i)
 	{
+		lookX = x + dRow[i]; lookY = y + dCol[i];
+		difX = abs(lookX - hint[hint_idx].second.first); difY = abs(lookY - hint[hint_idx].second.second);
+		if (difX > difY) stepMax = difX;
+		else stepMax = difY;
+
 		//길이 막혔을 때 숫자를 채우면서 왔던 길을 다시 0으로 만드는 부분.
 		if (i == 8 && !check) {
 			puzzle[x][y] = 0;
@@ -98,6 +105,9 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool chec
 		//길이 막혀서 왔던 길을 다시 되돌아오려고 하는데 힌트자리라서 0으로 바꾸지 않고 숫자를 그대로 놔두는 경우.
 		else if (i == 8 && check) {
 			return;
+		}
+		else if (difStep < stepMax) {
+			continue;
 		}
 		//한 칸을 더 가기위해 탐색을 하는데 hidato puzzle판을 넘어가는 경우. 아무일도 안하고 진행한다.
 		else if (x + dRow[i] > MAX_SIZE_MAP - 1 || x + dRow[i] < 0 || y + dCol[i] >MAX_SIZE_MAP - 1 || y + dCol[i] < 0) {
