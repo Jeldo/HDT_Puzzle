@@ -34,12 +34,11 @@ void Solver::setSolPuzzle(int** gen_puzzle, const int& row_size, const int& col_
 	sort(hint.begin(), hint.end());
 }
 
-void Solver::setWeightPuzzle(int** gen_puzzle, const int& row_size, const int& col_size, int& zero_count)
+void Solver::setWeightPuzzle(int** gen_puzzle, const int& row_size, const int& col_size)
 {
 	puzzle_row = row_size;
 	puzzle_col = col_size;
 	weight_puzzle = new int*[puzzle_row];
-	zero_count = zero_count;
 	for (int i = 0; i < puzzle_row; i++)
 	{
 		weight_puzzle[i] = new int[puzzle_col];
@@ -66,8 +65,36 @@ void Solver::setWeightPuzzle(int** gen_puzzle, const int& row_size, const int& c
 			}
 		}
 	}
-	setWeightPuzzle(weight_puzzle, 15, 15, zero_count);
+	setWeightPuzzle(weight_puzzle, 15, 15);
 }
+
+void Solver::solveWeightpuzzle(const int& x, const int& y, int& step, int& hint_idx, bool& isHint)
+{
+	if (isEnd)
+	{
+		return;
+	}
+	if (step == puzzle[end.first][end.second])
+	{
+		cout << "SUCCESS" << endl;
+		isEnd = true;
+		return;
+	}
+	/* TO DO
+	1. 8방향 탐색
+	2. 힌트가 있으면 힌트로 진행. 이후 recursively search.
+	3. 힌트가 아닌 값(가중치)이라면 작은 가중치순으로 탐색.
+	4. 기존의 Solve 함수 방식을 채용해서 탐색 이어나감.
+	
+	+@
+	작은 가중치 방향으로 가는 방법을 생각해봐야함.
+	힌트아닌 8방향을 priority queue/vector와 sort를 이용할 것인지
+	아니면 매번 조건문으로 작은 방향을 찾아줄 것인지..? 의외에도?
+	
+	*/
+
+}
+
 
 
 void Solver::ShowPuzzle()
@@ -92,7 +119,7 @@ void Solver::ShowHint()
 	}
 }
 
-void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool check)
+void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool isHint)
 {
 	//After finding one solve, all Solve will stop.
 	if (isEnd)
@@ -124,19 +151,19 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool chec
 		else stepMax = difY;
 
 		//길이 막혔을 때 숫자를 채우면서 왔던 길을 다시 0으로 만드는 부분.
-		if (i == 8 && !check) {
+		if (i == 8 && !isHint) {
 			puzzle[x][y] = 0;
 			return;
 		}
 		//길이 막혀서 왔던 길을 다시 되돌아오려고 하는데 힌트자리라서 0으로 바꾸지 않고 숫자를 그대로 놔두는 경우.
-		else if (i == 8 && check) {
+		else if (i == 8 && isHint) {
 			return;
 		}
 		else if (difStep < stepMax) {
 			continue;
 		}
 		//한 칸을 더 가기위해 탐색을 하는데 hidato puzzle판을 넘어가는 경우. 아무일도 안하고 진행한다.
-		else if (x + dRow[i] > MAX_SIZE_MAP - 1 || x + dRow[i] < 0 || y + dCol[i] >MAX_SIZE_MAP - 1 || y + dCol[i] < 0) {
+		else if (x + dRow[i] > MAX_SIZE_MAP - 1 || x + dRow[i] < 0 || y + dCol[i] > MAX_SIZE_MAP - 1 || y + dCol[i] < 0) {
 			//cout << "***continue***" << endl;
 			continue;
 		}

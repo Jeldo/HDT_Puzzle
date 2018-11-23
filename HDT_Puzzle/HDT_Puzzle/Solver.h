@@ -24,11 +24,12 @@ public:
 
 	Solver();
 	void setSolPuzzle(int** gen_puzzle, const int& row_size, const int& col_size);
-	void setWeightPuzzle(int** gen_puzzle, const int& row_size, const int& col_size, int& zero_count);
+	void setWeightPuzzle(int** gen_puzzle, const int& row_size, const int& col_size);
+	void solveWeightpuzzle(const int& x, const int& y, int& step, int& hint_idx, bool& isHint);
 	//void ShowWeightPuzzle(); TO DO
 	void ShowPuzzle();
 	void ShowHint();
-	void Solve(const int& x, const int& y, int step, int hint_idx, bool check);
+	void Solve(const int& x, const int& y, int step, int hint_idx, bool isHint);
 	int getMax();
 	INT_PAIR getStart();
 	INT_PAIR getEnd();
