@@ -18,7 +18,6 @@ Generator::Generator() {
 
 	this->stRow = MAX_SIZE_MAP / 2;
 	this->stCol = MAX_SIZE_MAP / 2;
-
 }
 
 int Generator::getStartRow() {
@@ -29,59 +28,59 @@ int Generator::getStartCol() {
 }
 
 //시작x, 시작y, 바꿀 숫자
-void Generator::GeneratorPuzzle(int x, int y, int value) {
-	maxMap_Solution[x][y] = value;
-
-	if (rand() % 10 < 3 || value == 13 || value == 1) {
-		maxMap[x][y] = value;
-		hintVecRow.push_back(x);
-		hintVecCol.push_back(y);
-		hintNum.push_back(value);
-	}
-	else {
-		maxMap[x][y] = 0;
-	}
-
-	curValue = value;
-
-	//최대치 도달
-	if (value == MAX_VALUE) {
-		return;
-	}
-
-	value++;
-	//break point는 다음과 같이 설정한다.
-	//움직이려는 방향이 maxMap에서 벗어나려 한다면
-	//dir배열 index를 1 올리고 움직일 수 있는지 확인한다.
-	//이 때 움직이지 않는 횟수에 대한 변수를 선언 후
-	//한 지점에서 움직이지 못할 때 마다 ++한다.
-	//만약 움직일수 있다면 0으로 초기화
-	//만약 모든 방향에서 움직이지 못한다면 ==8이므로 break
-	int stopCount = 0;
-
-	int ran;
-	ran = rand() % 8;
-	//cout<<ran;
-
-	for (int i = 0; i < 8; i++) {
-		int idx = (ran + i) % 8;
-		//만약 maxMap을 벗어난다면
-		if (x + dirRow[idx] < 0 || x + dirRow[idx] > MAX_SIZE_MAP - 1
-			|| y + dirCol[idx] < 0 || y + dirCol[idx] > MAX_SIZE_MAP - 1
-			|| maxMap[x + dirRow[idx]][y + dirCol[idx]] != -1) {
-			stopCount++;
-		}
-		//막힌 곳이 없다면
-		else {
-			GeneratorPuzzle(x + dirRow[idx], y + dirCol[idx], value);
-			break;
-		}
-	}
-
-	//모든 방향 이동 불가능
-	if (stopCount == 7) {
-		//return;
-	}
+void Generator::GeneratorPuzzle(int x, int y, int value){
+    maxMap_Solution[x][y] = value;
+    
+    if(rand()%10 < 3 || value == 13 || value == 1 || value == MAX_VALUE){
+        maxMap[x][y] = value;
+        hintVecRow.push_back(x);
+        hintVecCol.push_back(y);
+        hintNum.push_back(value);
+    }
+    else{
+        maxMap[x][y] = 0;
+    }
+    
+    curValue = value;
+    
+    //최대치 도달
+    if(value == MAX_VALUE){
+        return;
+    }
+    
+    value++;
+    //break point는 다음과 같이 설정한다.
+    //움직이려는 방향이 maxMap에서 벗어나려 한다면
+    //dir배열 index를 1 올리고 움직일 수 있는지 확인한다.
+    //이 때 움직이지 않는 횟수에 대한 변수를 선언 후
+    //한 지점에서 움직이지 못할 때 마다 ++한다.
+    //만약 움직일수 있다면 0으로 초기화
+    //만약 모든 방향에서 움직이지 못한다면 ==8이므로 break
+    int stopCount = 0;
+    
+    int ran;
+    ran = rand() % 8;
+    //cout<<ran;
+    
+    for(int i = 0; i < 8; i++){
+        int idx = (ran + i)%8;
+        //만약 maxMap을 벗어난다면
+        if(x + dRow[idx] < 0 || x + dRow[idx] > MAX_SIZE_MAP-1
+            || y + dCol[idx] < 0 || y + dCol[idx] > MAX_SIZE_MAP-1
+            || maxMap[x + dRow[idx]][y + dCol[idx]] != -1){
+            stopCount++;
+        }
+        //막힌 곳이 없다면
+        else{
+            GeneratorPuzzle(x + dRow[idx], y + dCol[idx], value);
+            break;
+        }
+    }
+    
+    //모든 방향 이동 불가능
+    if(stopCount >= 7){
+        maxMap[x][y] = value-1;
+    }
 }
 
 //풀어야할 퍼즐 출력
@@ -175,6 +174,10 @@ vector<vector<int> > Generator::getHint() {
 	return vector<vector<int> >(temp);
 }
 
+// int** Generator::getPuzzleTemp(){
+//     return this->mapTemp;
+// }
+
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2
 //main 함수(주석 해제해서 사용)
 //int main(){
@@ -190,10 +193,9 @@ vector<vector<int> > Generator::getHint() {
 //    int startY = Gen.getStartCol();
 //    
 //    Gen.GeneratorPuzzle(startX,startY,START_NUM);
-//    
 //    Gen.ShowPuzzle();
 //    //Gen.ShowCompletePuzzle();
-//    //Gen.ShowEndNumber();
+//    Gen.ShowEndNumber();
 //    //Gen.ShowHint();
 //    
 //    return 0;
