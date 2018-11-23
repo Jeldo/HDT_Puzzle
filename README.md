@@ -2,8 +2,8 @@
 
 This hidato puzzle program has three following modules:
 1. Generator
-2. Solver (currently working on this)
-3. Verifier
+2. Solver
+3. Verifier (currently working on this)
 
 
 Generator module:
@@ -18,6 +18,8 @@ Solver module:
 3. If it finds a solution, then passes its result to Verifier.
 
 Verifier:
+1. Gets solved puzzle table from Solver.
+2. Finds initial number to final number by searching adjacent numbers recursively.
 -TBD
 
 
