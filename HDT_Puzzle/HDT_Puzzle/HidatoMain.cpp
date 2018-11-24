@@ -23,7 +23,6 @@ int main(void)
 	cout << sol.getMax() << endl;
 	//cout << sol.getEnd().first << " " << sol.getEnd().second << endl;
 	sol.ShowPuzzle();
-	cout << "start" << endl;
 	clock_t begin, end;
 	begin = clock();
 	cout << "first setWeightPuzzle" << endl;
@@ -34,12 +33,19 @@ int main(void)
 	cout << "let's see the weightpuzzle" << endl;
 	sol.ShowWeightPuzzle();
 	cout << "let's start" << endl;
-	sol.Initiate();
+	sol.InitiateW();
 	end = clock();
-	cout << "finally" << endl;
 	sol.ShowPuzzle();
-	cout << endl << "Time: " << end - begin << "ms" << endl;
+	cout << "Time: " << end - begin << "ms" << endl;
+	cout << endl;
 
-
+	Solver sol2(MAX_SIZE_MAP, MAX_SIZE_MAP);
+	sol2.setSolPuzzle(Gen.getPuzzle());
+	sol2.ShowPuzzle();
+	begin = clock();
+	sol2.Initiate();
+	end = clock();
+	sol2.ShowPuzzle();
+	cout << "Time: " << end - begin << "ms" << endl;
 	return 0;
 }

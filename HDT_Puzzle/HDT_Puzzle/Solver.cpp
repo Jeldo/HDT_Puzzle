@@ -75,11 +75,6 @@ void Solver::setWeightPuzzle(int** gen_puzzle, float** wei_puzzle1)
 				{
 					wei_puzzle1[i][j] = sum / count;
 					zero_count--;
-					if (!zero_count)
-					{ 
-						weight_puzzle = wei_puzzle1;
-						return;
-					}
 				}
 			}
 			else
@@ -87,6 +82,11 @@ void Solver::setWeightPuzzle(int** gen_puzzle, float** wei_puzzle1)
 				wei_puzzle1[i][j] = -1;
 			}
 		}
+	}
+	if (!zero_count)
+	{
+		weight_puzzle = wei_puzzle1;
+		return;
 	}
 }
 
@@ -121,11 +121,6 @@ void Solver::setWeightPuzzle(float** wei_puzzle1, float** wei_puzzle2)
 				{
 					wei_puzzle2[i][j] = sum / count;
 					zero_count--;
-					if (!zero_count) 
-					{ 
-						weight_puzzle = wei_puzzle2;
-						return; 
-					}
 				}
 			}
 			else
@@ -133,6 +128,11 @@ void Solver::setWeightPuzzle(float** wei_puzzle1, float** wei_puzzle2)
 				wei_puzzle2[i][j] = wei_puzzle1[i][j];
 			}
 		}
+	}
+	if (!zero_count)
+	{
+		weight_puzzle = wei_puzzle2;
+		return;
 	}
 	cout << "next!" << endl;
 	setWeightPuzzle(wei_puzzle2, wei_puzzle1);
@@ -341,10 +341,13 @@ float** Solver::getWeiPuzzle2()
 
 void Solver::Initiate()
 {
-	//Solve(start.first, start.second, 1, 1, false);
-	solveWeightpuzzle(start.first, start.second, 1, 1);
+	Solve(start.first, start.second, 1, 1, false);
 }
 
+void Solver::InitiateW()
+{
+	solveWeightpuzzle(start.first, start.second, 1, 1);
+}
 /*
 Add Weight
 가중치 추가

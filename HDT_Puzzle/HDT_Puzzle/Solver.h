@@ -40,4 +40,5 @@ public:
 	float** getWeiPuzzle1();
 	float** getWeiPuzzle2();
 	void Initiate();
+	void InitiateW();
 };
