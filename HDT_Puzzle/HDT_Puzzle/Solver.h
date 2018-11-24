@@ -28,7 +28,7 @@ public:
 	void setSolPuzzle(int** gen_puzzle);
 	void setWeightPuzzle(int** gen_puzzle,float** wei_puzzle1);
 	void setWeightPuzzle(float** wei_puzzle1,float** wei_puzzle2);
-	void solveWeightpuzzle(const int& x, const int& y, int& step, int& hint_idx, bool& isHint);
+	void solveWeightpuzzle(const int& x, const int& y, int step, int hint_idx, bool isHint);
 	//void ShowWeightPuzzle(); TO DO
 	void ShowPuzzle();
 	void ShowWeightPuzzle();
@@ -37,5 +37,7 @@ public:
 	int getMax();
 	INT_PAIR getStart();
 	INT_PAIR getEnd();
+	float** getWeiPuzzle1();
+	float** getWeiPuzzle2();
 	void Initiate();
 };

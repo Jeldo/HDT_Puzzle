@@ -25,12 +25,17 @@ int main(void)
 	sol.ShowPuzzle();
 	clock_t begin, end;
 	begin = clock();
+
+	//잘 전달하고 있는가 확인 필요
+	sol.setWeightPuzzle(Gen.getPuzzle(), sol.getWeiPuzzle1());
+	sol.setWeightPuzzle(sol.getWeiPuzzle1(), sol.getWeiPuzzle2());
+	//sol.ShowWeightPuzzle();
+
 	sol.Initiate();
 	end = clock();
 	sol.ShowPuzzle();
 	cout << endl << "Time: " << end - begin << "ms" << endl;
-	sol.ShowWeightPuzzle();
 
-	
+
 	return 0;
 }

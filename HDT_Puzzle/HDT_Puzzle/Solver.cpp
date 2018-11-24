@@ -131,7 +131,7 @@ void Solver::setWeightPuzzle(float** wei_puzzle1, float** wei_puzzle2)
 
 
 // CURRENTLY WORKING !!
-void Solver::solveWeightpuzzle(const int& x, const int& y, int& step, int& hint_idx, bool& isHint)
+void Solver::solveWeightpuzzle(const int& x, const int& y, int step, int hint_idx, bool isHint)
 {
 	//End. After finding one solve, all Solve will stop.
 	if (isEnd)
@@ -199,6 +199,7 @@ void Solver::ShowPuzzle()
 	}
 }
 
+//출력시 소수점 1자리만 출력하도록 수정
 void Solver::ShowWeightPuzzle()
 {
 	for (int i = 0; i < puzzle_row; ++i)
@@ -301,9 +302,20 @@ INT_PAIR Solver::getEnd()
 	return INT_PAIR(end);
 }
 
+float** Solver::getWeiPuzzle1()
+{
+	return wei_puzzle1;
+}
+
+float** Solver::getWeiPuzzle2()
+{
+	return wei_puzzle2;
+}
+
 void Solver::Initiate()
 {
-	Solve(start.first, start.second, 1, 1, false);
+	//Solve(start.first, start.second, 1, 1, false);
+	solveWeightpuzzle(start.first, start.second, 1, 1, false);
 }
 
 /*
