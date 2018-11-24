@@ -131,7 +131,7 @@ void Solver::setWeightPuzzle(float** wei_puzzle1, float** wei_puzzle2)
 
 
 // CURRENTLY WORKING !!
-void Solver::solveWeightpuzzle(const int& x, const int& y, int step, int hint_idx, bool isHint)
+void Solver::solveWeightpuzzle(const int& x, const int& y, int step, int hint_idx)
 {
 	//End. After finding one solve, all Solve will stop.
 	if (isEnd)
@@ -141,49 +141,67 @@ void Solver::solveWeightpuzzle(const int& x, const int& y, int step, int hint_id
 	// Success. It checks whether step is same end.
 	if (step == puzzle[end.first][end.second])
 	{
-		cout << "SUCCESS" << endl;
+		cout << "****************************************SUCCESS" << endl;
 		isEnd = true;
 		return;
 	}
 
 	puzzle[x][y] = step;
-	//cout << "step: " << step << " , visiting: " << "(" << x << "," << y << ") ::" << puzzle[x][y] << "------" << endl;
+	weight_puzzle[x][y] = -1; ////////////////////////////////
+	//cout << step << " , visiting: " << "(" << x << "," << y << ") ::" << puzzle[x][y] << "------" << endl;
+	
+
 	vector<pair<float, int> > weight;
 
 	//가중치 저장.
 	for (int i = 0; i < 8; i++) {
 		int lookX = x + dRow[i], lookY = y + dCol[i];
 		if (lookX > MAX_SIZE_MAP - 1 || lookX < 0 || lookY > MAX_SIZE_MAP - 1 || lookY < 0)
+		{
 			continue;
-		if (puzzle[lookX][lookY] == 0)
+		}
+		if (weight_puzzle[lookX][lookY] != -1) {///////////////////////////////////
 			weight.push_back(make_pair(weight_puzzle[lookX][lookY], i));
-
+		}
+		//아래는 정상 작동.
 		if (step + 1 == puzzle[lookX][lookY]) {
-			Solve(lookX, lookY, step + 1, hint_idx + 1, true);
+			float nextWeight = weight_puzzle[lookX][lookY]; /////////////////////////
+			solveWeightpuzzle(lookX, lookY, step + 1, hint_idx + 1);
+			weight_puzzle[lookX][lookY] = nextWeight; //////////////////////////
 		}
 	}
-	sort(weight.begin(), weight.end());
+	sort(weight.begin(), weight.end());////////////////////////////
 
 
 	int hintValue = puzzle[hint[hint_idx].second.first][hint[hint_idx].second.second];
 	// 가중치로 진행.
 	if (step + 1 < hintValue)
 	{
-		for (int i = 0; i < weight.size() && !isEnd; ++i)
+		for (int i = 0; i < weight.size(); ++i)
 		{
-			Solve(x + dRow[weight[i].second], y + dCol[weight[i].second], step + 1, hint_idx, false);
+			int lookX = x + dRow[weight[i].second], lookY = y + dCol[weight[i].second];
+			float nextWeight = weight_puzzle[lookX][lookY]; //////////////////////////
+			solveWeightpuzzle(lookX, lookY, step + 1, hint_idx);
+			if (!isEnd) { ////////////////////////////////
+				puzzle[lookX][lookY] = 0;
+				weight_puzzle[lookX][lookY] = nextWeight;
+			}
 		}
 	}
 	// 백트래킹
+	/*
 	else if (!isHint)
 	{
+		cout << "???" << endl;
 		puzzle[x][y] = 0;
 		return;
 	}
 	else if (isHint)
 	{
+		cout << "???" << endl;
 		return;
 	}
+	*/
 }
 
 
