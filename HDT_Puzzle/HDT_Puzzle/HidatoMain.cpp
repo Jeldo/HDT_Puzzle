@@ -23,16 +23,20 @@ int main(void)
 	cout << sol.getMax() << endl;
 	//cout << sol.getEnd().first << " " << sol.getEnd().second << endl;
 	sol.ShowPuzzle();
+	cout << "start" << endl;
 	clock_t begin, end;
 	begin = clock();
-
+	cout << "first setWeightPuzzle" << endl;
 	//잘 전달하고 있는가 확인 필요
 	sol.setWeightPuzzle(Gen.getPuzzle(), sol.getWeiPuzzle1());
+	cout << "second setWeightPuzzle" << endl;
 	sol.setWeightPuzzle(sol.getWeiPuzzle1(), sol.getWeiPuzzle2());
-	//sol.ShowWeightPuzzle();
-
+	cout << "let's see the weightpuzzle" << endl;
+	sol.ShowWeightPuzzle();
+	cout << "let's start" << endl;
 	sol.Initiate();
 	end = clock();
+	cout << "finally" << endl;
 	sol.ShowPuzzle();
 	cout << endl << "Time: " << end - begin << "ms" << endl;
 

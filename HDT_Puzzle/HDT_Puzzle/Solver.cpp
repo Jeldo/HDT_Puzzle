@@ -59,6 +59,10 @@ void Solver::setWeightPuzzle(int** gen_puzzle, float** wei_puzzle1)
 				for (int k = 0; k < 8; k++)
 				{
 					int lookX = i + dRow[k], lookY = j + dCol[k];
+					if (lookX > MAX_SIZE_MAP - 1 || lookX < 0 || lookY > MAX_SIZE_MAP - 1 || lookY < 0)
+					{
+						continue;
+					}
 					if (gen_puzzle[lookX][lookY] != 0 && gen_puzzle[lookX][lookY] != -1)
 					{
 						sum += gen_puzzle[lookX][lookY];
@@ -101,6 +105,10 @@ void Solver::setWeightPuzzle(float** wei_puzzle1, float** wei_puzzle2)
 				for (int k = 0; k < 8; k++)
 				{
 					int lookX = i + dRow[k], lookY = j + dCol[k];
+					if (lookX > MAX_SIZE_MAP - 1 || lookX < 0 || lookY > MAX_SIZE_MAP - 1 || lookY < 0)
+					{
+						continue;
+					}
 					if (wei_puzzle1[lookX][lookY] != 0 && wei_puzzle1[lookX][lookY] != -1)
 					{
 						sum += wei_puzzle1[lookX][lookY];
@@ -126,6 +134,7 @@ void Solver::setWeightPuzzle(float** wei_puzzle1, float** wei_puzzle2)
 			}
 		}
 	}
+	cout << "next!" << endl;
 	setWeightPuzzle(wei_puzzle2, wei_puzzle1);
 }
 
@@ -224,7 +233,7 @@ void Solver::ShowWeightPuzzle()
 	{
 		for (int j = 0; j < puzzle_col; ++j)
 		{
-			printf("%3f", weight_puzzle[i][j]);
+			printf("%3.0f", weight_puzzle[i][j]);
 		}
 		cout << endl;
 	}
@@ -333,7 +342,7 @@ float** Solver::getWeiPuzzle2()
 void Solver::Initiate()
 {
 	//Solve(start.first, start.second, 1, 1, false);
-	solveWeightpuzzle(start.first, start.second, 1, 1, false);
+	solveWeightpuzzle(start.first, start.second, 1, 1);
 }
 
 /*
