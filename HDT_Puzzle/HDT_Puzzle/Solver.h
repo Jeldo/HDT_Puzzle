@@ -18,16 +18,20 @@ private:
 	vector<pair<int, pair<int, int> > > hint;
 	bool isEnd;
 	int zero_count;
-	int** weight_puzzle;
+	float** wei_puzzle1;
+	float** wei_puzzle2;
+	float** weight_puzzle;
 
 public:
 
-	Solver();
-	void setSolPuzzle(int** gen_puzzle, const int& row_size, const int& col_size);
-	void setWeightPuzzle(int** gen_puzzle, const int& row_size, const int& col_size);
+	Solver(int row, int col);
+	void setSolPuzzle(int** gen_puzzle);
+	void setWeightPuzzle(int** gen_puzzle,float** wei_puzzle1);
+	void setWeightPuzzle(float** wei_puzzle1,float** wei_puzzle2);
 	void solveWeightpuzzle(const int& x, const int& y, int& step, int& hint_idx, bool& isHint);
 	//void ShowWeightPuzzle(); TO DO
 	void ShowPuzzle();
+	void ShowWeightPuzzle();
 	void ShowHint();
 	void Solve(const int& x, const int& y, int step, int hint_idx, bool isHint);
 	int getMax();

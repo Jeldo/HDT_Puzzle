@@ -1,14 +1,20 @@
 #include "Solver.h"
 
 
-Solver::Solver()
-	:max(0), isEnd(false), zero_count(0)
-{}
-
-void Solver::setSolPuzzle(int** gen_puzzle, const int& row_size, const int& col_size)
+Solver::Solver(int row, int col)
+	:max(0), isEnd(false), zero_count(0), puzzle_row(row), puzzle_col(col)
 {
-	puzzle_row = row_size;
-	puzzle_col = col_size;
+	wei_puzzle1 = new float*[puzzle_row];
+	wei_puzzle2 = new float*[puzzle_row];
+	for (int i = 0; i < puzzle_row; i++)
+	{
+		wei_puzzle1[i] = new float[puzzle_col];
+		wei_puzzle2[i] = new float[puzzle_col];
+	}
+}
+
+void Solver::setSolPuzzle(int** gen_puzzle)
+{
 	puzzle = new int*[puzzle_row];
 	for (int i = 0; i < puzzle_row; ++i)
 	{
@@ -29,72 +35,156 @@ void Solver::setSolPuzzle(int** gen_puzzle, const int& row_size, const int& col_
 				max = gen_puzzle[i][j];
 				end.first = i, end.second = j;
 			}
+			if (gen_puzzle[i][j] == 0)
+			{
+				++zero_count;
+			}
 		}
 	}
 	sort(hint.begin(), hint.end());
 }
 
-void Solver::setWeightPuzzle(int** gen_puzzle, const int& row_size, const int& col_size)
+// Creating new puzzle tables infinitely.. :<
+// This function has to be called only once.
+void Solver::setWeightPuzzle(int** gen_puzzle, float** wei_puzzle1)
 {
-	puzzle_row = row_size;
-	puzzle_col = col_size;
-	weight_puzzle = new int*[puzzle_row];
 	for (int i = 0; i < puzzle_row; i++)
 	{
-		weight_puzzle[i] = new int[puzzle_col];
 		for (int j = 0; j < puzzle_col; j++)
 		{
 			if (gen_puzzle[i][j] == 0)
 			{
-				int sum = 0;
+				float sum = 0;
 				int count = 0;
 				for (int k = 0; k < 8; k++)
 				{
-					if (gen_puzzle[i + dRow[k]][j + dCol[k]] != 0 && gen_puzzle[i + dRow[k]][j + dCol[k]] != -1)
+					int lookX = i + dRow[k], lookY = j + dCol[k];
+					if (gen_puzzle[lookX][lookY] != 0 && gen_puzzle[lookX][lookY] != -1)
 					{
-						sum += gen_puzzle[i + dRow[k]][j + dCol[k]];
+						sum += gen_puzzle[lookX][lookY];
 						count++;
 					}
 				}
-				if (sum != 0)
+				if (sum == 0)
+					wei_puzzle1[i][j] = 0;
+				else
 				{
-					weight_puzzle[i][j] = sum / count;
+					wei_puzzle1[i][j] = sum / count;
 					zero_count--;
-					if (!zero_count) return;
+					if (!zero_count)
+					{ 
+						weight_puzzle = wei_puzzle1;
+						return;
+					}
 				}
+			}
+			else
+			{
+				wei_puzzle1[i][j] = -1;
 			}
 		}
 	}
-	setWeightPuzzle(weight_puzzle, 15, 15);
 }
 
+// Overloaded for first parameter
+// There would be a better way :(
+void Solver::setWeightPuzzle(float** wei_puzzle1, float** wei_puzzle2)
+{
+	for (int i = 0; i < puzzle_row; i++)
+	{
+		for (int j = 0; j < puzzle_col; j++)
+		{
+			if (wei_puzzle1[i][j] == 0)
+			{
+				float sum = 0;
+				int count = 0;
+				for (int k = 0; k < 8; k++)
+				{
+					int lookX = i + dRow[k], lookY = j + dCol[k];
+					if (wei_puzzle1[lookX][lookY] != 0 && wei_puzzle1[lookX][lookY] != -1)
+					{
+						sum += wei_puzzle1[lookX][lookY];
+						count++;
+					}
+				}
+				if (sum == 0)
+					wei_puzzle2[i][j] = 0;
+				else
+				{
+					wei_puzzle2[i][j] = sum / count;
+					zero_count--;
+					if (!zero_count) 
+					{ 
+						weight_puzzle = wei_puzzle2;
+						return; 
+					}
+				}
+			}
+			else
+			{
+				wei_puzzle2[i][j] = wei_puzzle1[i][j];
+			}
+		}
+	}
+	setWeightPuzzle(wei_puzzle2, wei_puzzle1);
+}
+
+
+// CURRENTLY WORKING !!
 void Solver::solveWeightpuzzle(const int& x, const int& y, int& step, int& hint_idx, bool& isHint)
 {
+	//End. After finding one solve, all Solve will stop.
 	if (isEnd)
 	{
 		return;
 	}
+	// Success. It checks whether step is same end.
 	if (step == puzzle[end.first][end.second])
 	{
 		cout << "SUCCESS" << endl;
 		isEnd = true;
 		return;
 	}
-	/* TO DO
-	1. 8방향 탐색
-	2. 힌트가 있으면 힌트로 진행. 이후 recursively search.
-	3. 힌트가 아닌 값(가중치)이라면 작은 가중치순으로 탐색.
-	4. 기존의 Solve 함수 방식을 채용해서 탐색 이어나감.
-	
-	+@
-	작은 가중치 방향으로 가는 방법을 생각해봐야함.
-	힌트아닌 8방향을 priority queue/vector와 sort를 이용할 것인지
-	아니면 매번 조건문으로 작은 방향을 찾아줄 것인지..? 의외에도?
-	
-	*/
 
+	puzzle[x][y] = step;
+	//cout << "step: " << step << " , visiting: " << "(" << x << "," << y << ") ::" << puzzle[x][y] << "------" << endl;
+	vector<pair<float, int> > weight;
+
+	//가중치 저장.
+	for (int i = 0; i < 8; i++) {
+		int lookX = x + dRow[i], lookY = y + dCol[i];
+		if (lookX > MAX_SIZE_MAP - 1 || lookX < 0 || lookY > MAX_SIZE_MAP - 1 || lookY < 0)
+			continue;
+		if (puzzle[lookX][lookY] == 0)
+			weight.push_back(make_pair(weight_puzzle[lookX][lookY], i));
+
+		if (step + 1 == puzzle[lookX][lookY]) {
+			Solve(lookX, lookY, step + 1, hint_idx + 1, true);
+		}
+	}
+	sort(weight.begin(), weight.end());
+
+
+	int hintValue = puzzle[hint[hint_idx].second.first][hint[hint_idx].second.second];
+	// 가중치로 진행.
+	if (step + 1 < hintValue)
+	{
+		for (int i = 0; i < weight.size() && !isEnd; ++i)
+		{
+			Solve(x + dRow[weight[i].second], y + dCol[weight[i].second], step + 1, hint_idx, false);
+		}
+	}
+	// 백트래킹
+	else if (!isHint)
+	{
+		puzzle[x][y] = 0;
+		return;
+	}
+	else if (isHint)
+	{
+		return;
+	}
 }
-
 
 
 void Solver::ShowPuzzle()
@@ -104,6 +194,18 @@ void Solver::ShowPuzzle()
 		for (int j = 0; j < puzzle_col; ++j)
 		{
 			printf("%3d", puzzle[i][j]);
+		}
+		cout << endl;
+	}
+}
+
+void Solver::ShowWeightPuzzle()
+{
+	for (int i = 0; i < puzzle_row; ++i)
+	{
+		for (int j = 0; j < puzzle_col; ++j)
+		{
+			printf("%3f", weight_puzzle[i][j]);
 		}
 		cout << endl;
 	}

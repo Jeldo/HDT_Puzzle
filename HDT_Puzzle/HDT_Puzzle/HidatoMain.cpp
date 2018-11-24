@@ -18,8 +18,8 @@ int main(void)
 	//Gen.ShowCompletePuzzle();
 	//Gen.ShowHint();
 
-	Solver sol;
-	sol.setSolPuzzle(Gen.getPuzzle(), 15, 15); // row, col size 변수 선언해야함
+	Solver sol(MAX_SIZE_MAP, MAX_SIZE_MAP);
+	sol.setSolPuzzle(Gen.getPuzzle()); // row, col size 변수 선언해야함
 	cout << sol.getMax() << endl;
 	//cout << sol.getEnd().first << " " << sol.getEnd().second << endl;
 	sol.ShowPuzzle();
@@ -29,5 +29,8 @@ int main(void)
 	end = clock();
 	sol.ShowPuzzle();
 	cout << endl << "Time: " << end - begin << "ms" << endl;
+	sol.ShowWeightPuzzle();
+
+	
 	return 0;
 }
