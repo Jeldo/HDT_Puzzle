@@ -13,7 +13,7 @@ int main(void)
 	int startX = Gen.getStartRow();
 	int startY = Gen.getStartCol();
 	Gen.GeneratorPuzzle(startX, startY, START_NUM);
-	Gen.getEndNumber();
+	//Gen.getEndNumber();
 	Gen.ShowPuzzle();
 	Gen.ShowCompletePuzzle();
 	Gen.ShowHint();
@@ -22,7 +22,7 @@ int main(void)
 	//sol.setPuzzlePtr(Gen.getPuzzle());
 	sol.setSolPuzzle(Gen.getPuzzle(), 15, 15); // row, col size 변수 선언해야함
 	cout << sol.getMax() << endl;
-	cout << sol.getEnd().first << " " << sol.getEnd().second << endl;
+	//cout << sol.getEnd().first << " " << sol.getEnd().second << endl;
 	sol.ShowPuzzle();
 	clock_t begin, end;
 	begin = clock();
