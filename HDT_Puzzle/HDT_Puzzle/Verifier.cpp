@@ -44,6 +44,10 @@ void Verifier::verifyPuzzle(const int& x, const int& y, int step)
 	{
 		lookX = x + dRow[i]; lookY = y + dCol[i];
 
+		if(lookX < 0 || lookX >= MAX_SIZE_MAP || lookY < 0 || lookY >= MAX_SIZE_MAP){
+			continue;
+		}
+
         if (i == 8) // 8방향 중  어느 곳으로도 갈수 없다.
         {
             cout << "discorrect" << endl;
@@ -56,9 +60,9 @@ void Verifier::verifyPuzzle(const int& x, const int& y, int step)
 		    return;
         }
 
-        else if (puzzle[lookX][lookY] = step + 1)
+        else if (puzzle[lookX][lookY] == step + 1)
         {
-            verifyPuzzle(lookY, lookY, step);
+            verifyPuzzle(lookX, lookY, step + 1);
             break;
         }
     }

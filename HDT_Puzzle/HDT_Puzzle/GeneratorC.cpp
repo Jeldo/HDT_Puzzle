@@ -40,6 +40,19 @@ void Generator::GeneratorPuzzle(int x, int y, int value){
     else{
         maxMap[x][y] = 0;
     }
+	int zeroCount = 0;
+	for(int i = 0; i < 8; i++){
+		if(x + dRow[i] < 0 || x + dRow[i] >= MAX_SIZE_MAP || y + dCol[i] < 0 || y + dCol[i] >= MAX_SIZE_MAP){
+			continue;
+		}
+		if(maxMap[x][y] == 0){
+			zeroCount++;
+		}
+    }
+
+	if(zeroCount == 7){
+		maxMap[x][y] = value;
+	}
     
     curValue = value;
     
