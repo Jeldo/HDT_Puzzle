@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include "Solver.h"
 #include "GeneratorC.h"
+#include "Verifier.h"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ int main(void)
 
 	Solver sol;
 	//sol.setPuzzlePtr(Gen.getPuzzle());
-	sol.setSolPuzzle(Gen.getPuzzle(), 15, 15); // row, col size º¯¼ö ¼±¾ðÇØ¾ßÇÔ
+	sol.setSolPuzzle(Gen.getPuzzle(), 15, 15); // row, col size ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½
 	cout << sol.getMax() << endl;
 	//cout << sol.getEnd().first << " " << sol.getEnd().second << endl;
 	sol.ShowPuzzle();
@@ -30,5 +31,10 @@ int main(void)
 	end = clock();
 	sol.ShowPuzzle();
 	cout << endl << "Time: " << end - begin << "ms" << endl;
+
+	Verifier ver;
+	ver.findStartAndEnd(sol.getPuzzle(), 15, 15);
+	ver.Verifey();
+
 	return 0;
 }
