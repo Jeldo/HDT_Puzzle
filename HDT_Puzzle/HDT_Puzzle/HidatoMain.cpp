@@ -18,6 +18,7 @@ int main(void)
 	Gen.ShowPuzzle();
 	Gen.ShowCompletePuzzle();
 	Gen.ShowHint();
+	Gen.ReduceZero();
 
 	Solver sol;
 	//sol.setPuzzlePtr(Gen.getPuzzle());

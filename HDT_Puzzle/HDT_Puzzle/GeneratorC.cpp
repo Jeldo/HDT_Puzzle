@@ -54,7 +54,7 @@ void Generator::GeneratorPuzzle(int x, int y, int value){
 		// }
     }
 
-	if(zeroCount >= 8){
+	if(zeroCount >= 4){
 		maxMap[x][y] = value;
 		hintVecRow.push_back(x);
         hintVecCol.push_back(y);
@@ -170,6 +170,29 @@ void Generator::ShowHint() {
 		cout << hintNum[i] << "(" << hintVecRow[i] << "," << hintVecCol[i] << ") ";
 	}
 	cout << "----------------------------------------------------" << endl;
+}
+
+void Generator::ReduceZero(){
+	int zeroCount = 0;
+	for(int i = 0; i < MAX_SIZE_MAP; i++){
+		for(int j = 0; j < MAX_SIZE_MAP; j++){
+			for(int t = 0; t < 8; t++){
+				if(i + dRow[t] < 0 || i + dRow[t] >= MAX_SIZE_MAP || j + dCol[t] < 0 || j + dCol[t] >= MAX_SIZE_MAP){
+					continue;
+				}
+				if(maxMap[i + dRow[t]][j + dCol[t]] == 0){
+					zeroCount++;
+				}
+			}
+
+			if(zeroCount >= ZERO){
+				maxMap[i][j] = maxMap_Solution[i][j];
+			}
+
+		}
+	}
+	
+	
 }
 
 int ** Generator::getPuzzle()

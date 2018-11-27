@@ -62,6 +62,8 @@ public:
 
 	//힌트 배열 리턴
 	vector<vector<int> > getHint();
+
+	void ReduceZero();
 };
 
 #endif

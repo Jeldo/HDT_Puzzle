@@ -9,6 +9,7 @@
 #define LUCKYNUM 10
 #define HINT_RATE 3
 #define DIF 20
+#define ZERO 6
 
 //남 남서 서 북서 북 북동 동 남동 아니죠
 //북 북서 서 남서 남 남동 동 북동
