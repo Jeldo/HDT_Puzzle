@@ -56,9 +56,9 @@ void Verifier::verifyPuzzle(const int& x, const int& y, int step)
 		    return;
         }
 
-        else if (puzzle[lookX][lookY] = step + 1)
+        else if (puzzle[lookX][lookY] == step + 1)
         {
-            verifyPuzzle(lookY, lookY, step);
+            verifyPuzzle(lookX, lookY, step + 1);
             break;
         }
     }
