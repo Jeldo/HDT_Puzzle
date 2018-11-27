@@ -31,7 +31,7 @@ int Generator::getStartCol() {
 void Generator::GeneratorPuzzle(int x, int y, int value){
     maxMap_Solution[x][y] = value;
     
-    if(rand()%10 < 3 || value % 13 == 0 || value == 1 || value == MAX_VALUE){
+    if(rand()%10 < HINT_RATE || value % LUCKYNUM == 0 || value == 1 || value == MAX_VALUE){
         maxMap[x][y] = value;
         hintVecRow.push_back(x);
         hintVecCol.push_back(y);
@@ -40,6 +40,19 @@ void Generator::GeneratorPuzzle(int x, int y, int value){
     else{
         maxMap[x][y] = 0;
     }
+	int zeroCount = 0;
+	for(int i = 0; i < 8; i++){
+		if(x + dRow[i] < 0 || x + dRow[i] >= MAX_SIZE_MAP || y + dCol[i] < 0 || y + dCol[i] >= MAX_SIZE_MAP){
+			continue;
+		}
+		if(maxMap[x][y] == 0){
+			zeroCount++;
+		}
+    }
+
+	if(zeroCount == 7){
+		maxMap[x][y] = value;
+	}
     
     curValue = value;
     
@@ -71,6 +84,10 @@ void Generator::GeneratorPuzzle(int x, int y, int value){
             stopCount++;
         }
         //막힌 곳이 없다면
+		else if ((value - maxMap[x + dRow[idx]][y + dCol[idx]]) > DIF && maxMap[x + dRow[idx]][y + dCol[idx]]!=-1) {
+			stopCount = 7;
+			break;
+		}
         else{
             GeneratorPuzzle(x + dRow[idx], y + dCol[idx], value);
             break;
