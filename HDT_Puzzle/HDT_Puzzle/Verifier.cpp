@@ -43,20 +43,19 @@ void Verifier::verifyPuzzle(const int& x, const int& y, int step)
     for (int i = 0; i < 9; ++i) // 8방향탐색을 위한 8가지 경우와 8방향탐색이 실패했을 1가지 경우를 합해서 9가지 경우를 탐색한다.
 	{
 		lookX = x + dRow[i]; lookY = y + dCol[i];
-
 		if(lookX < 0 || lookX >= MAX_SIZE_MAP || lookY < 0 || lookY >= MAX_SIZE_MAP){
 			continue;
 		}
 
         if (i == 8) // 8방향 중  어느 곳으로도 갈수 없다.
         {
-            cout << "discorrect" << endl;
+            cout << "incorrect" << endl;
 		    return;
         }
 
         else if (puzzle[lookX][lookY] == 0) // 채워지지 않은 부분이 존재한다.
         {
-            cout << "discorrect" << endl;
+            cout << "incorrect" << endl;
 		    return;
         }
 
@@ -68,7 +67,7 @@ void Verifier::verifyPuzzle(const int& x, const int& y, int step)
     }
 }
 
-void Verifier::Verifey()
+void Verifier::Verify()
 {
     verifyPuzzle(start.first, start.second, 1);
 }
