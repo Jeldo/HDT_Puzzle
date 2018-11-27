@@ -34,7 +34,7 @@ int main(void)
 
 	Verifier ver;
 	ver.findStartAndEnd(sol.getPuzzle(), 15, 15);
-	ver.Verifey();
+	ver.Verify();
 
 	return 0;
 }
