@@ -3,7 +3,7 @@
 This hidato puzzle program has three following modules:
 1. Generator
 2. Solver
-3. Verifier (currently working on this)
+3. Verifier
 
 
 Generator module:
@@ -20,9 +20,6 @@ Solver module:
 Verifier:
 1. Gets solved puzzle table from Solver.
 2. Finds initial number to final number by searching adjacent numbers recursively.
--TBD
-
-
 
 Reference
 </br>
