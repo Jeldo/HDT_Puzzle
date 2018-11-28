@@ -24,6 +24,9 @@
     <ClCompile Include="GeneratorC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Verifier.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Solver.h">
@@ -33,6 +36,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratorC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Verifier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

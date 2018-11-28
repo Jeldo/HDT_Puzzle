@@ -40,18 +40,26 @@ void Generator::GeneratorPuzzle(int x, int y, int value){
     else{
         maxMap[x][y] = 0;
     }
+	
 	int zeroCount = 0;
 	for(int i = 0; i < 8; i++){
 		if(x + dRow[i] < 0 || x + dRow[i] >= MAX_SIZE_MAP || y + dCol[i] < 0 || y + dCol[i] >= MAX_SIZE_MAP){
 			continue;
 		}
-		if(maxMap[x][y] == 0){
+		if(maxMap[x + dRow[i]][y + dCol[i]] == 0){
 			zeroCount++;
 		}
+		// else{
+		// 	//break;
+		// }
     }
 
-	if(zeroCount == 7){
+	if(zeroCount >= 4){
 		maxMap[x][y] = value;
+		hintVecRow.push_back(x);
+        hintVecCol.push_back(y);
+        hintNum.push_back(value);
+		zeroCount = 0;
 	}
     
     curValue = value;
@@ -85,7 +93,7 @@ void Generator::GeneratorPuzzle(int x, int y, int value){
         }
         //막힌 곳이 없다면
 		else if ((value - maxMap[x + dRow[idx]][y + dCol[idx]]) > DIF && maxMap[x + dRow[idx]][y + dCol[idx]]!=-1) {
-			stopCount = 7;
+			stopCount = 8;
 			break;
 		}
         else{
@@ -95,7 +103,7 @@ void Generator::GeneratorPuzzle(int x, int y, int value){
     }
     
     //모든 방향 이동 불가능
-    if(stopCount >= 7){
+    if(stopCount >= 8){
         maxMap[x][y] = value-1;
     }
 }
@@ -162,6 +170,33 @@ void Generator::ShowHint() {
 		cout << hintNum[i] << "(" << hintVecRow[i] << "," << hintVecCol[i] << ") ";
 	}
 	cout << "----------------------------------------------------" << endl;
+}
+
+void Generator::ReduceZero(){
+	
+	for(int i = 0; i < MAX_SIZE_MAP; i++){
+		for(int j = 0; j < MAX_SIZE_MAP; j++){
+			int zeroCount = 0;
+			for(int t = 0; t < 8; t++){
+				if(i + dRow[t] < 0 || i + dRow[t] >= MAX_SIZE_MAP || j + dCol[t] < 0 || j + dCol[t] >= MAX_SIZE_MAP){
+					continue;
+				}
+				if(maxMap[i + dRow[t]][j + dCol[t]] == 0){
+					zeroCount++;
+				}
+			}
+
+			if(zeroCount >= ZERO){
+				maxMap[i][j] = maxMap_Solution[i][j];
+				hintVecRow.push_back(i);
+        		hintVecCol.push_back(j);
+        		hintNum.push_back(maxMap_Solution[i][j]);
+			}
+
+		}
+	}
+	
+	
 }
 
 int ** Generator::getPuzzle()

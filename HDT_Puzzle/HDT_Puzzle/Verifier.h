@@ -18,7 +18,7 @@ public:
     Verifier();
     void findStartAndEnd(int** sol_puzzle, const int& row_size, const int& col_size);
     void verifyPuzzle(const int& x, const int& y, int step);
-    void Verifey();
+    void Verify();
     INT_PAIR getStart();
 	INT_PAIR getEnd();
     
