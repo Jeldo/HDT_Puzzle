@@ -15,10 +15,11 @@ int main(void)
 	int startY = Gen.getStartCol();
 	Gen.GeneratorPuzzle(startX, startY, START_NUM);
 	//Gen.getEndNumber();
+	Gen.ReduceZero();
 	Gen.ShowPuzzle();
 	Gen.ShowCompletePuzzle();
 	Gen.ShowHint();
-	Gen.ReduceZero();
+	
 
 	Solver sol;
 	//sol.setPuzzlePtr(Gen.getPuzzle());

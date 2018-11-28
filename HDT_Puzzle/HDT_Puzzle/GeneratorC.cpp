@@ -173,9 +173,10 @@ void Generator::ShowHint() {
 }
 
 void Generator::ReduceZero(){
-	int zeroCount = 0;
+	
 	for(int i = 0; i < MAX_SIZE_MAP; i++){
 		for(int j = 0; j < MAX_SIZE_MAP; j++){
+			int zeroCount = 0;
 			for(int t = 0; t < 8; t++){
 				if(i + dRow[t] < 0 || i + dRow[t] >= MAX_SIZE_MAP || j + dCol[t] < 0 || j + dCol[t] >= MAX_SIZE_MAP){
 					continue;
@@ -187,6 +188,9 @@ void Generator::ReduceZero(){
 
 			if(zeroCount >= ZERO){
 				maxMap[i][j] = maxMap_Solution[i][j];
+				hintVecRow.push_back(i);
+        		hintVecCol.push_back(j);
+        		hintNum.push_back(maxMap_Solution[i][j]);
 			}
 
 		}
