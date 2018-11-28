@@ -124,11 +124,13 @@
     <ClCompile Include="GeneratorC.cpp" />
     <ClCompile Include="HidatoMain.cpp" />
     <ClCompile Include="Solver.cpp" />
+    <ClCompile Include="Verifier.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonDef.h" />
     <ClInclude Include="GeneratorC.h" />
     <ClInclude Include="Solver.h" />
+    <ClInclude Include="Verifier.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="puzzle.txt" />
