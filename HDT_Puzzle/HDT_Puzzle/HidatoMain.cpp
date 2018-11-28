@@ -21,9 +21,10 @@ int main(void)
 	Gen.ShowHint();
 	
 
-	Solver sol;
+	Solver sol(MAX_SIZE_MAP,MAX_SIZE_MAP);
+	
 	//sol.setPuzzlePtr(Gen.getPuzzle());
-	sol.setSolPuzzle(Gen.getPuzzle(), 15, 15);
+	sol.setSolPuzzle(Gen.getPuzzle());
 	cout << sol.getMax() << endl;
 	//cout << sol.getEnd().first << " " << sol.getEnd().second << endl;
 	sol.ShowPuzzle();

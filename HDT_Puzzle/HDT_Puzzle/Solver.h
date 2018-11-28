@@ -39,6 +39,7 @@ public:
 	INT_PAIR getEnd();
 	float** getWeiPuzzle1();
 	float** getWeiPuzzle2();
+	int** getPuzzle();
 	void Initiate();
 	void InitiateW();
 };

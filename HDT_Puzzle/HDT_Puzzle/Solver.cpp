@@ -338,6 +338,10 @@ float** Solver::getWeiPuzzle2()
 {
 	return wei_puzzle2;
 }
+int** Solver::getPuzzle()
+{
+	return puzzle;
+}
 
 void Solver::Initiate()
 {
