@@ -13,6 +13,14 @@ Solver::Solver(int row, int col)
 	}
 }
 
+Solver::~Solver()
+{
+	/*
+	TO DO
+	delete 2d arrays
+	*/
+}
+
 void Solver::setSolPuzzle(int** gen_puzzle)
 {
 	puzzle = new int*[puzzle_row];
@@ -139,7 +147,6 @@ void Solver::setWeightPuzzle(float** wei_puzzle1, float** wei_puzzle2)
 }
 
 
-// CURRENTLY WORKING !!
 void Solver::solveWeightpuzzle(const int& x, const int& y, int step, int hint_idx)
 {
 	//End. After finding one solve, all Solve will stop.
@@ -150,36 +157,31 @@ void Solver::solveWeightpuzzle(const int& x, const int& y, int step, int hint_id
 	// Success. It checks whether step is same end.
 	if (step == puzzle[end.first][end.second])
 	{
-		cout << "****************************************SUCCESS" << endl;
+		cout << "SUCCESS" << endl;
 		isEnd = true;
 		return;
 	}
-
 	puzzle[x][y] = step;
-	weight_puzzle[x][y] = -1; ////////////////////////////////
-	//cout << step << " , visiting: " << "(" << x << "," << y << ") ::" << puzzle[x][y] << "------" << endl;
-	
-
+	weight_puzzle[x][y] = -1;
 	vector<pair<float, int> > weight;
 
-	//가중치 저장.
+	//set weight by searching adjacent matrices
 	for (int i = 0; i < 8; i++) {
 		int lookX = x + dRow[i], lookY = y + dCol[i];
 		if (lookX > MAX_SIZE_MAP - 1 || lookX < 0 || lookY > MAX_SIZE_MAP - 1 || lookY < 0)
 		{
 			continue;
 		}
-		if (weight_puzzle[lookX][lookY] != -1) {///////////////////////////////////
+		if (weight_puzzle[lookX][lookY] != -1) {
 			weight.push_back(make_pair(weight_puzzle[lookX][lookY], i));
 		}
-		//아래는 정상 작동.
 		if (step + 1 == puzzle[lookX][lookY]) {
-			float nextWeight = weight_puzzle[lookX][lookY]; /////////////////////////
+			float nextWeight = weight_puzzle[lookX][lookY];
 			solveWeightpuzzle(lookX, lookY, step + 1, hint_idx + 1);
-			weight_puzzle[lookX][lookY] = nextWeight; //////////////////////////
+			weight_puzzle[lookX][lookY] = nextWeight;
 		}
 	}
-	sort(weight.begin(), weight.end());////////////////////////////
+	sort(weight.begin(), weight.end());
 
 
 	int hintValue = puzzle[hint[hint_idx].second.first][hint[hint_idx].second.second];
@@ -189,28 +191,14 @@ void Solver::solveWeightpuzzle(const int& x, const int& y, int step, int hint_id
 		for (int i = 0; i < weight.size(); ++i)
 		{
 			int lookX = x + dRow[weight[i].second], lookY = y + dCol[weight[i].second];
-			float nextWeight = weight_puzzle[lookX][lookY]; //////////////////////////
+			float nextWeight = weight_puzzle[lookX][lookY]; 
 			solveWeightpuzzle(lookX, lookY, step + 1, hint_idx);
-			if (!isEnd) { ////////////////////////////////
+			if (!isEnd) { 
 				puzzle[lookX][lookY] = 0;
 				weight_puzzle[lookX][lookY] = nextWeight;
 			}
 		}
 	}
-	// 백트래킹
-	/*
-	else if (!isHint)
-	{
-		cout << "???" << endl;
-		puzzle[x][y] = 0;
-		return;
-	}
-	else if (isHint)
-	{
-		cout << "???" << endl;
-		return;
-	}
-	*/
 }
 
 
@@ -239,37 +227,25 @@ void Solver::ShowWeightPuzzle()
 	}
 }
 
-void Solver::ShowHint()
-{
-	vector<pair<int, pair<int, int> > >::iterator it;
-	for (it = hint.begin(); it != hint.end(); ++it)
-	{
-		//cout << puzzle[(*it).first][(*it).second]<<" :::: "<<(*it).first << " " << (*it).second << endl;
-		//cout << (*it).first << " :::: " << (*it).second.first << " " << (*it).second.second << endl;
-	}
-}
-
 void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool isHint)
 {
-	//After finding one solve, all Solve will stop.
+	//Stop all remaining Solve recursions if finds a solution.
 	if (isEnd)
 	{
 		return;
 	}
-	// Success. It checks whether step is same end.
 	if (step == puzzle[end.first][end.second])
 	{
 		cout << "SUCCESS" << endl;
 		isEnd = true;
 		return;
 	}
-	// It will cut unnecessary searching. If step is same
+	//Stop Solve when current step comes up to hint's number while it's not on the hint.
 	if (step == puzzle[hint[hint_idx].second.first][hint[hint_idx].second.second] && (x != hint[hint_idx].second.first || y != hint[hint_idx].second.second))
 	{
 		return;
 	}
 	puzzle[x][y] = step;
-	//cout << "step: " << step << " , visiting: " << "(" << x << "," << y << ") ::" << puzzle[x][y] << "---------------------------------------------------" << endl;
 	int lookX, lookY, stepMax, difX, difY;
 	int difStep = (puzzle[hint[hint_idx].second.first][hint[hint_idx].second.second] - step - 1);
 
@@ -294,7 +270,6 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool isHi
 		}
 		//한 칸을 더 가기위해 탐색을 하는데 hidato puzzle판을 넘어가는 경우. 아무일도 안하고 진행한다.
 		else if (lookX >= MAX_SIZE_MAP || lookX < 0 || lookY >= MAX_SIZE_MAP || lookY < 0) {
-			//cout << "***continue***" << endl;
 			continue;
 		}
 		//한 칸 진행하려는 부분이 0이면서, 다음 힌트인 숫자보다 작다면 한 칸 진행한다. 재귀로 호출.
@@ -307,10 +282,6 @@ void Solver::Solve(const int& x, const int& y, int step, int hint_idx, bool isHi
 		{
 			Solve(lookX, lookY, step + 1, hint_idx + 1, true);
 		}
-
-		/*cout << "i= " << i << " : step= " << step << " : hint_idx= " << hint_idx << endl;
-		cout << puzzle[x][y] << " : " << puzzle[hint_temp[hint_idx].second.first][hint_temp[hint_idx].second.second] << " : look= " << puzzle[x + dRow[i]][y + dCol[i]] << " : lookX= " << x + dRow[i] << " : lookY= " << y + dCol[i] << endl;
-  */
 	}
 }
 

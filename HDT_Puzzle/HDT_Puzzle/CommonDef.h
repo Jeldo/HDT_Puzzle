@@ -7,7 +7,7 @@
 #define VEC_PAIR vector<pair<int,int> >
 #define INT_PAIR pair<int,int>
 #define LUCKYNUM 10
-#define HINT_RATE 3
+#define HINT_RATE 2
 #define DIF 20
 #define ZERO 6
 

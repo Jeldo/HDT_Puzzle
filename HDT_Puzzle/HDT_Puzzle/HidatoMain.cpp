@@ -18,7 +18,7 @@ int main(void)
 	Gen.ReduceZero();
 	Gen.ShowPuzzle();
 	Gen.ShowCompletePuzzle();
-	Gen.ShowHint();
+	//Gen.ShowHint();
 	
 
 	Solver sol(MAX_SIZE_MAP,MAX_SIZE_MAP);
@@ -29,33 +29,35 @@ int main(void)
 	//cout << sol.getEnd().first << " " << sol.getEnd().second << endl;
 	sol.ShowPuzzle();
 	clock_t begin, end;
-	begin = clock();
 	cout << "first setWeightPuzzle" << endl;
 	sol.setWeightPuzzle(Gen.getPuzzle(), sol.getWeiPuzzle1());
 	cout << "second setWeightPuzzle" << endl;
 	sol.setWeightPuzzle(sol.getWeiPuzzle1(), sol.getWeiPuzzle2());
 	cout << "let's see the weightpuzzle" << endl;
-	sol.ShowWeightPuzzle();
+	//sol.ShowWeightPuzzle();
 	cout << "let's start" << endl;
+	begin = clock();
 	sol.InitiateW();
 	end = clock();
-	sol.ShowPuzzle();
+	//sol.ShowPuzzle();
   
 	cout << "Time: " << end - begin << "ms" << endl;
 	cout << endl;
 
 	Solver sol2(MAX_SIZE_MAP, MAX_SIZE_MAP);
 	sol2.setSolPuzzle(Gen.getPuzzle());
-	sol2.ShowPuzzle();
+	//sol2.ShowPuzzle();
 	begin = clock();
 	sol2.Initiate();
 	end = clock();
-	sol2.ShowPuzzle();
+	//sol2.ShowPuzzle();
 	cout << endl << "Time: " << end - begin << "ms" << endl;
 
 	Verifier ver;
-	ver.findStartAndEnd(sol.getPuzzle(), 15, 15);
+	ver.findStartAndEnd(sol.getPuzzle(), MAX_SIZE_MAP, MAX_SIZE_MAP);
 	ver.Verify();
+	//sol.~Solver();
+	sol2.~Solver();
 
 	return 0;
 }

@@ -25,14 +25,13 @@ private:
 public:
 
 	Solver(int row, int col);
+	~Solver();
 	void setSolPuzzle(int** gen_puzzle);
 	void setWeightPuzzle(int** gen_puzzle,float** wei_puzzle1);
 	void setWeightPuzzle(float** wei_puzzle1,float** wei_puzzle2);
 	void solveWeightpuzzle(const int& x, const int& y, int step, int hint_idx);
-	//void ShowWeightPuzzle(); TO DO
 	void ShowPuzzle();
 	void ShowWeightPuzzle();
-	void ShowHint();
 	void Solve(const int& x, const int& y, int step, int hint_idx, bool isHint);
 	int getMax();
 	INT_PAIR getStart();
