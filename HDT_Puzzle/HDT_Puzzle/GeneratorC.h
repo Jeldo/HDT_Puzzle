@@ -33,6 +33,7 @@ private:
 
 public:
 	Generator();
+	~Generator();
 
 	int getStartRow();
 	int getStartCol();

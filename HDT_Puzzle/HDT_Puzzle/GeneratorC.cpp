@@ -14,10 +14,19 @@ Generator::Generator() {
 			maxMap_Solution[row][col] = -1;
 		}
 	}
-	//value = 0;
 
 	this->stRow = MAX_SIZE_MAP / 2;
 	this->stCol = MAX_SIZE_MAP / 2;
+}
+
+Generator::~Generator(){
+	for (int row = 0; row < MAX_SIZE_MAP; row++) {
+		delete maxMap[row];
+		delete maxMap_Solution[row];
+	}
+
+	delete maxMap;
+	delete maxMap_Solution;
 }
 
 int Generator::getStartRow() {
@@ -49,9 +58,7 @@ void Generator::GeneratorPuzzle(int x, int y, int value){
 		if(maxMap[x + dRow[i]][y + dCol[i]] == 0){
 			zeroCount++;
 		}
-		// else{
-		// 	//break;
-		// }
+
     }
 
 	if(zeroCount >= 4){
