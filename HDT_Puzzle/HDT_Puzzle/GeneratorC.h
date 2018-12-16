@@ -39,7 +39,7 @@ public:
 	int getStartCol();
 
 	//시작x, 시작y, 바꿀 숫자
-	void GeneratorPuzzle(int x, int y, int value);
+	void GeneratorPuzzle(int x, int y, int value, bool pass);
 
 	//풀어야할 퍼즐 출력
 	void ShowPuzzle();

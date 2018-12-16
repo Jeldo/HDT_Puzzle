@@ -2,7 +2,7 @@
 
 
 Solver::Solver(int row, int col)
-	:max(0), isEnd(false), zero_count(0), puzzle_row(row), puzzle_col(col)
+	:max(0), isEnd(false), zero_count(0), puzzle_row(row), puzzle_col(col), hint_count(0)
 {
 	wei_puzzle1 = new float*[puzzle_row];
 	wei_puzzle2 = new float*[puzzle_row];
@@ -33,15 +33,18 @@ void Solver::setSolPuzzle(int** gen_puzzle)
 			if (gen_puzzle[i][j] != -1 && gen_puzzle[i][j] != 0)// table입력이 -1, 0 아니면 hint로 판단하고 위치 저장,start&end는 아직
 			{
 				hint.push_back(make_pair(puzzle[i][j], INT_PAIR(i, j)));
+				hint_count++;
 			}
 			if (gen_puzzle[i][j] == 1)
 			{
 				start.first = i, start.second = j;
+				
 			}
 			if (gen_puzzle[i][j] > max)
 			{
 				max = gen_puzzle[i][j];
 				end.first = i, end.second = j;
+								
 			}
 			if (gen_puzzle[i][j] == 0)
 			{
@@ -99,7 +102,6 @@ void Solver::setWeightPuzzle(int** gen_puzzle, float** wei_puzzle1)
 }
 
 // Overloaded for first parameter
-// There would be a better way :(
 void Solver::setWeightPuzzle(float** wei_puzzle1, float** wei_puzzle2)
 {
 	for (int i = 0; i < puzzle_row; i++)
@@ -142,7 +144,7 @@ void Solver::setWeightPuzzle(float** wei_puzzle1, float** wei_puzzle2)
 		weight_puzzle = wei_puzzle2;
 		return;
 	}
-	cout << "next!" << endl;
+	//cout << "next!" << endl;
 	setWeightPuzzle(wei_puzzle2, wei_puzzle1);
 }
 
@@ -312,6 +314,11 @@ float** Solver::getWeiPuzzle2()
 int** Solver::getPuzzle()
 {
 	return puzzle;
+}
+
+int Solver::getHintCount()
+{
+	return hint_count;
 }
 
 void Solver::Initiate()

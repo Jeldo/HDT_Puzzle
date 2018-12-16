@@ -8,8 +8,8 @@
 #define INT_PAIR pair<int,int>
 #define LUCKYNUM 10
 #define HINT_RATE 2
-#define DIF 20
-#define ZERO 6
+#define DIF 30
+#define ZERO 7
 
 //북 북서 서 남서 남 남동 동 북동
 static int dRow[8] = { -1,-1,0,1,1,1,0,-1 };

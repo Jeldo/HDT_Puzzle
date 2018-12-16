@@ -13,6 +13,7 @@ private:
 	int puzzle_row, puzzle_col;
 	int** puzzle;
 	int max;
+	int hint_count;
 	INT_PAIR start;
 	INT_PAIR end;
 	vector<pair<int, pair<int, int> > > hint;
@@ -21,6 +22,7 @@ private:
 	float** wei_puzzle1;
 	float** wei_puzzle2;
 	float** weight_puzzle;
+	
 
 public:
 
@@ -34,6 +36,7 @@ public:
 	void ShowWeightPuzzle();
 	void Solve(const int& x, const int& y, int step, int hint_idx, bool isHint);
 	int getMax();
+	int getHintCount();
 	INT_PAIR getStart();
 	INT_PAIR getEnd();
 	float** getWeiPuzzle1();
